@@ -1,0 +1,513 @@
+#user_id	name	house	region	title	rank	institution
+0	Cedric	Umber	North	Maester	E	Faith of the Seven
+1	Horas	Redwyne	Reach	Maester	B	
+2	Coryanne	Martell	Dorne	Septon	J	Old Gods
+3	Cleyton	Umber	North	Septon	E	Many-Faced God
+4	Denyse	Hightower	Reach	Maester	B	
+5	Medrick	Manderly	North	Maester	C	Faith of the Seven
+6	Harlan	Hunter	Vale	Maester	B	Faith of the Seven
+7	Petyr	Karstark	North	Maester	B	Faith of the Seven
+8	Myles	Hightower	Reach	Maester	B	Faith of the Seven
+9	Alyn	Blackwood	Riverlands	Maester	B	Many-Faced God
+10	Willem	Lannister	Westerlands	Maester	D	
+11	Ronel	Rivers	Riverlands	Maester	E	Faith of the Seven
+12	Bethany	Bracken	Riverlands	Knight	H	Lord of Light
+13	Hendry	Bracken	Riverlands	Maester	C	Many-Faced God
+14	Raymund	Tyrell	Reach	Maester	G	Faith of the Seven
+15	Jonnel	Stark	North	Septon	E	
+16	Cleos	Frey	Riverlands	Maester	D	
+17	Lysa	Farman	Westerlands	Septon	E	Faith of the Seven
+18	Jason	Hightower	Reach	Maester	B	
+19	Clarent	Crakehall	Westerlands	Maester	E	Many-Faced God
+20	Tytos	Blackwood	Riverlands	Maester	B	Old Gods
+21	Joy	Hill	Westerlands	Maester	D	Lord of Light
+22	Brandon	Umber	North	Knight	H	
+23	Joseth	Umber	North	Maester	G	Faith of the Seven
+24	Geremy	Frey	Riverlands	Maester	H	Many-Faced God
+25	Arya	Flint	North	Maester	B	Faith of the Seven
+26	Jon	Karstark	North	Knight	H	Old Gods
+27	Gormon	Peake	Reach	Septon	E	Faith of the Seven
+28	Yrma	Peake	Reach	Maester	B	
+29	Renfred	Rykker	Crownlands	Maester	D	Faith of the Seven
+30	Alysanne	Bracken	Riverlands	Maester	E	Faith of the Seven
+31	Ceryse	Hightower	Reach	Septon	E	Faith of the Seven
+32	Derrick	Darry	Riverlands	Maester	B	Faith of the Seven
+33	Cersei	Lannister	Westerlands	Maester	B	
+34	Tristifer	Umber	North	Maester	B	
+35	Bran	Stark	North	Maester	D	
+36	Medwick	Tyrell	Reach	Maester	D	Faith of the Seven
+37	Alysanne	Stark	North	Maester	B	Many-Faced God
+38	Horys	Hill	Westerlands	Maester	E	Many-Faced God
+39	Arthor	Karstark	North	Maester	J	Many-Faced God
+40	Mara	Manderly	North	Maester	B	Faith of the Seven
+41	Hagon	Bracken	Riverlands	Knight	E	Lord of Light
+42	Elinor	Tyrell	Reach	Maester	B	
+43	Maron	Martell	Dorne	Septon	H	Many-Faced God
+44	Selmond	Umber	North	Magister	E	Faith of the Seven
+45	Urrigon	Hightower	Reach	Maester	E	Faith of the Seven
+46	Walton	Frey	Riverlands	Septon	E	Faith of the Seven
+47	Luthor	Tyrell	Reach	Maester	D	Faith of the Seven
+48	Ryam	Redwyne	Reach	Maester	B	
+49	Osney	Peake	Reach	Maester	B	
+50	Kemmett	Rivers	Riverlands	Maester	D	Old Gods
+51	Kevan	Lannister	Westerlands	Maester	E	Faith of the Seven
+52	Barthogan	Stark	North	Maester	B	
+53	Jon	Umber	North	Maester	J	Faith of the Seven
+54	Stafford	Lannister	Westerlands	Maester	B	
+55	Alec	Hunter	Vale	Maester	H	Faith of the Seven
+56	Rickard	Redwyne	Reach	Knight	H	Old Gods
+57	Rhae	Peake	Reach	Knight	E	Old Gods
+58	Stevron	Frey	Riverlands	Maester	B	Faith of the Seven
+59	Gerion	Lannister	Westerlands	Maester	B	
+60	Samwyle	Tarly	Reach	Magister	A	Lord of Light
+61	Myriame	Manderly	North	Maester	D	Faith of the Seven
+62	Jonothor	Darry	Riverlands	Maester	E	Many-Faced God
+63	Jaime	Frey	Riverlands	Maester	E	Faith of the Seven
+64	Leo	Tyrell	Reach	Maester	B	Faith of the Seven
+65	Damon	Hightower	Reach	Maester	D	Faith of the Seven
+66	Lorra	Royce	Vale	Knight	H	Lord of Light
+67	Imry	Florent	Reach	Maester	E	Faith of the Seven
+68	Lyessa	Flint	North	Maester	E	Faith of the Seven
+69	Jeremy	Hightower	Reach	Septon	E	
+70	Harrold	Peake	Reach	Magister	B	Faith of the Seven
+71	Manfrey	Martell	Dorne	Septon	G	Many-Faced God
+72	Tytos	Frey	Riverlands	Maester	I	Faith of the Seven
+73	Braxton	Beesbury	Reach	Knight	E	Old Gods
+74	Catelyn	Stark	North	Maester	C	Faith of the Seven
+75	Droopeye	Florent	Reach	Septon	E	Faith of the Seven
+76	Lord	Redwyne	Reach	Maester	D	Faith of the Seven
+77	Edderion	Stark	North	Maester	B	
+78	Jonos	Bracken	Riverlands	Septon	E	Lord of Light
+79	Petyr	Frey	Riverlands	Maester	B	Faith of the Seven
+80	Clarisse	Dayne	Dorne	Septon	E	Old Gods
+81	Garmund	Hightower	Reach	Maester	E	Faith of the Seven
+82	Daemion	Redwyne	Reach	Magister	B	Faith of the Seven
+83	Garth	Tyrell	Reach	Maester	B	Faith of the Seven
+84	Pykewood	Peake	Reach	Maester	B	Many-Faced God
+85	Shiera	Crakehall	Westerlands	Knight	F	Old Gods
+86	Humfrey	Bracken	Riverlands	Maester	B	
+87	Hoster	Frey	Riverlands	Maester	B	Faith of the Seven
+88	Robin	Flint	North	Maester	J	Faith of the Seven
+89	Olyver	Bracken	Riverlands	Maester	J	Many-Faced God
+90	Jeyne	Darry	Riverlands	Septon	E	Faith of the Seven
+91	Meria	Martell	Dorne	Septon	E	Old Gods
+92	Sandor	Frey	Riverlands	Maester	E	Faith of the Seven
+93	Daven	Lannister	Westerlands	Maester	J	Faith of the Seven
+94	Darnold	Darry	Riverlands	Maester	B	
+95	Lyman	Darry	Riverlands	Maester	B	
+96	Wulfgar	Peake	Reach	Septon	I	Old Gods
+97	Denys	Redwyne	Reach	Magister	E	
+98	Dorren	Stark	North	Maester	B	Faith of the Seven
+99	Reginald	Crakehall	Westerlands	Maester	E	Many-Faced God
+100	Florian	Florent	Reach	Maester	B	
+101	Lyle	Crakehall	Westerlands	Maester	E	Many-Faced God
+102	Amerei	Frey	Riverlands	Magister	E	
+103	Kyle	Royce	Vale	Knight	E	Old Gods
+104	Lorimar	Peake	Reach	Maester	E	Many-Faced God
+105	Jon	Hightower	Reach	Maester	I	Faith of the Seven
+106	Alys	Rivers	Riverlands	Maester	E	Faith of the Seven
+107	Robert	Frey	Riverlands	Maester	B	
+108	Pearse	Florent	Reach	Septon	E	Faith of the Seven
+109	Cletus	Yronwood	Dorne	Knight	K	
+110	Rhea	Florent	Reach	Magister	B	Faith of the Seven
+111	Addam	Frey	Riverlands	Maester	B	Faith of the Seven
+112	Hother	Umber	North	Maester	D	Faith of the Seven
+113	Emerick	Peake	Reach	Maester	D	Old Gods
+114	Otho	Bracken	Riverlands	Maester	B	Many-Faced God
+115	Arsa	Stark	North	Maester	E	Faith of the Seven
+116	Shiera	Blackwood	Riverlands	Maester	B	
+117	Loras	Tyrell	Reach	Maester	J	Faith of the Seven
+118	Walton	Stark	North	Septon	E	
+119	Lelia	Lannister	Westerlands	Maester	B	
+120	Hoarfrost	Umber	North	Maester	B	Faith of the Seven
+121	Rylene	Florent	Reach	Maester	B	
+122	Jasper	Arryn	Vale	Knight	E	Old Gods
+123	Wendel	Manderly	North	Maester	G	Faith of the Seven
+124	Gormon	Tyrell	Reach	Magister	E	
+125	Bertram	Beesbury	Reach	Maester	J	Many-Faced God
+126	Warryn	Beesbury	Reach	Maester	B	Many-Faced God
+127	Medger	Redwyne	Reach	Maester	E	Faith of the Seven
+128	Axell	Florent	Reach	Maester	E	Faith of the Seven
+129	Danwell	Frey	Riverlands	Maester	B	
+130	Anders	Yronwood	Dorne	Magister	E	
+131	Lord	Darry	Riverlands	Maester	B	Old Gods
+132	Lothar	Bracken	Riverlands	Maester	B	
+133	Ned	Umber	North	Maester	E	Faith of the Seven
+134	Martyn	Lannister	Westerlands	Maester	C	
+135	Erena	Glover	North	Maester	B	
+136	Tristan	Rivers	Riverlands	Knight	H	Old Gods
+137	Lymond	Hightower	Reach	Maester	H	Faith of the Seven
+138	Lorent	Tyrell	Reach	Maester	D	
+139	Regnar	Florent	Reach	Maester	B	Faith of the Seven
+140	Tion	Frey	Riverlands	Maester	B	Faith of the Seven
+141	Allyria	Dayne	Dorne	Septon	D	Old Gods
+142	Ryam	Florent	Reach	Maester	E	Many-Faced God
+143	Manfred	Hightower	Reach	Magister	B	
+144	Rickon	Stark	North	Maester	H	
+145	Alliser	Thorne	Crownlands	Maester	E	Faith of the Seven
+146	Kyra	Frey	Riverlands	Maester	B	Faith of the Seven
+147	Amarei	Crakehall	Westerlands	Septon	E	
+148	Quenton	Hightower	Reach	Septon	E	
+149	Qyle	Corbray	Vale	Knight	E	Lord of Light
+150	Alicent	Hightower	Reach	Maester	B	
+151	Lord	Hightower	Reach	Maester	B	Faith of the Seven
+152	Daragh	Umber	North	Maester	D	
+153	Balman	Byrch	Crownlands	Magister	D	
+154	Herrock	Blackwood	Riverlands	Maester	B	Faith of the Seven
+155	Gareth	Tyrell	Reach	Septon	E	Faith of the Seven
+156	Gareth	Umber	North	Maester	B	
+157	Robert	Redwyne	Reach	Knight	E	Old Gods
+158	Quentyn	Martell	Dorne	Septon	E	Faith of the Seven
+159	Morgan	Martell	Dorne	Septon	E	
+160	Selyse	Florent	Reach	Knight	H	Faith of the Seven
+161	Samwell	Rivers	Riverlands	Maester	E	Faith of the Seven
+162	Big	Rivers	Riverlands	Maester	B	Lord of Light
+163	Aliandra	Martell	Dorne	Septon	H	Old Gods
+164	Vorian	Dayne	Dorne	Septon	C	Old Gods
+165	Bethany	Blackwood	Riverlands	Maester	B	
+166	Cleos	Umber	North	Maester	H	Faith of the Seven
+167	Benton	Glover	North	Maester	B	Faith of the Seven
+168	Lord	Bracken	Riverlands	Maester	E	Many-Faced God
+169	Tymond	Lannister	Westerlands	Maester	H	Faith of the Seven
+170	Karlon	Stark	North	Maester	B	
+171	Darnold	Arryn	Vale	Maester	B	Old Gods
+172	Lewys	Redwyne	Reach	Magister	B	Faith of the Seven
+173	Torrhen	Stark	North	Maester	C	
+174	Theomore	Lannister	Westerlands	Maester	B	
+175	Ashara	Dayne	Dorne	Septon	E	Old Gods
+176	Jocelyn	Stark	North	Maester	E	Faith of the Seven
+177	Aelora	Peake	Reach	Maester	B	
+178	Bertrand	Tyrell	Reach	Maester	B	Faith of the Seven
+179	Jeor	Mormont	North	Septon	E	Old Gods
+180	Donnel	Hightower	Reach	Maester	B	Faith of the Seven
+181	Mara	Martell	Dorne	Septon	I	Old Gods
+182	Ronald	Florent	Reach	Septon	E	Old Gods
+183	Alester	Florent	Reach	Maester	B	Faith of the Seven
+184	Quenten	Redwyne	Reach	Maester	E	Faith of the Seven
+185	Ellaria	Sand	Dorne	Septon	C	Faith of the Seven
+186	Urrathon	Peake	Reach	Maester	E	Faith of the Seven
+187	Beatrice	Peake	Reach	Maester	B	Old Gods
+188	Symon	Gaunt	Crownlands	Maester	G	Many-Faced God
+189	Sam	Florent	Reach	Septon	E	Old Gods
+190	Arianne	Martell	Dorne	Septon	I	Old Gods
+191	Yorbert	Royce	Vale	Maester	B	Faith of the Seven
+192	Harmund	Tyrell	Reach	Septon	I	Faith of the Seven
+193	Bryan	Frey	Riverlands	Maester	B	Faith of the Seven
+194	Melwys	Rivers	Riverlands	Septon	E	
+195	Merianne	Frey	Riverlands	Maester	E	Faith of the Seven
+196	Longwater	Hightower	Reach	Knight	E	Old Gods
+197	Gilliane	Glover	North	Maester	B	Faith of the Seven
+198	Harry	Rivers	Riverlands	Maester	B	Faith of the Seven
+199	Ysilla	Royce	Vale	Maester	B	Faith of the Seven
+200	Raymun	Darry	Riverlands	Maester	E	Faith of the Seven
+201	Mors	Umber	North	Magister	D	
+202	Margaery	Tyrell	Reach	Maester	B	Faith of the Seven
+203	Titus	Peake	Reach	Maester	D	Faith of the Seven
+204	Walder	Rivers	Riverlands	Maester	B	Faith of the Seven
+205	Lord	Farman	Westerlands	Maester	B	Faith of the Seven
+206	Alyssa	Royce	Vale	Septon	E	Faith of the Seven
+207	Prudence	Bracken	Riverlands	Maester	B	Faith of the Seven
+208	Barquen	Peake	Reach	Maester	D	Faith of the Seven
+209	Jon	Stark	North	Maester	E	Faith of the Seven
+210	Myriah	Martell	Dorne	Maester	I	Many-Faced God
+211	Regan	Umber	North	Knight	H	
+212	Robb	Rivers	Riverlands	Maester	B	Lord of Light
+213	Ryman	Frey	Riverlands	Maester	E	Faith of the Seven
+214	Edric	Stark	North	Maester	E	Faith of the Seven
+215	Unwin	Peake	Reach	Maester	E	Faith of the Seven
+216	Normund	Tyrell	Reach	Magister	E	Faith of the Seven
+217	Corin	Umber	North	Maester	C	Faith of the Seven
+218	Abelar	Hightower	Reach	Maester	G	Faith of the Seven
+219	Tarth	Redwyne	Reach	Maester	J	Faith of the Seven
+220	Humfrey	Hightower	Reach	Maester	G	Faith of the Seven
+221	Jorah	Stark	North	Maester	E	Many-Faced God
+222	Mellara	Rivers	Riverlands	Magister	E	
+223	Jafer	Crakehall	Westerlands	Maester	B	Many-Faced God
+224	Edgerran	Oakheart	Reach	Maester	B	Faith of the Seven
+225	Otto	Hightower	Reach	Maester	E	Faith of the Seven
+226	Omer	Florent	Reach	Maester	B	Faith of the Seven
+227	Gwayne	Corbray	Vale	Maester	B	Faith of the Seven
+228	Walda	Rivers	Riverlands	Maester	E	Faith of the Seven
+229	Ondrew	Tyrell	Reach	Maester	B	Many-Faced God
+230	Brandon	Stark	North	Maester	B	Old Gods
+231	Rickard	Karstark	North	Septon	H	Lord of Light
+232	Myrielle	Lannister	Westerlands	Knight	K	
+233	Royce	Blackwood	Riverlands	Maester	J	Faith of the Seven
+234	Morag	Umber	North	Maester	B	
+235	Jack	Peake	Reach	Maester	D	Faith of the Seven
+236	Alan	Beesbury	Reach	Magister	E	
+237	Guncer	Sunglass	Crownlands	Maester	D	Faith of the Seven
+238	Megga	Tyrell	Reach	Septon	E	Faith of the Seven
+239	Ulf	Redwyne	Reach	Maester	B	
+240	Melissa	Blackwood	Riverlands	Septon	E	Faith of the Seven
+241	Runcel	Hightower	Reach	Maester	B	
+242	Lyman	Lannister	Westerlands	Maester	B	
+243	Mariah	Stark	North	Maester	B	Faith of the Seven
+244	Billy	Tyrell	Reach	Magister	E	
+245	Olyvar	Martell	Dorne	Septon	G	Faith of the Seven
+246	Roland	Blackwood	Riverlands	Maester	C	Faith of the Seven
+247	Dorian	Hightower	Reach	Maester	B	Faith of the Seven
+248	Garth	Hightower	Reach	Maester	B	
+249	Baelor	Hightower	Reach	Maester	D	Faith of the Seven
+250	Colin	Florent	Reach	Maester	I	Faith of the Seven
+251	Arnold	Arryn	Vale	Knight	E	Old Gods
+252	Desmond	Darry	Riverlands	Septon	E	Old Gods
+253	Samwell	Blackwood	Riverlands	Maester	B	
+254	Lady	Bracken	Riverlands	Maester	E	Many-Faced God
+255	Laswell	Peake	Reach	Maester	D	Faith of the Seven
+256	Damon	Darry	Riverlands	Maester	B	
+257	Gerold	Hightower	Reach	Maester	B	
+258	Raylon	Rivers	Riverlands	Maester	B	Faith of the Seven
+259	Alerie	Hightower	Reach	Maester	B	
+260	Beony	Beesbury	Reach	Magister	E	
+261	Robb	Stark	North	Maester	B	
+262	Tybolt	Crakehall	Westerlands	Maester	B	Faith of the Seven
+263	Quenton	Corbray	Vale	Maester	B	Faith of the Seven
+264	Mara	Karstark	North	Maester	D	Faith of the Seven
+265	Mathis	Frey	Riverlands	Maester	B	Faith of the Seven
+266	Lynesse	Hightower	Reach	Maester	B	Old Gods
+267	Hugh	Arryn	Vale	Maester	E	Many-Faced God
+268	Garon	Peake	Reach	Maester	D	
+269	Bess	Bracken	Riverlands	Maester	B	
+270	Sumner	Crakehall	Westerlands	Maester	B	
+271	Aregelle	Stark	North	Maester	B	Faith of the Seven
+272	Joanna	Lannister	Westerlands	Maester	D	Faith of the Seven
+273	Lucan	Umber	North	Maester	E	Faith of the Seven
+274	Errold	Stark	North	Magister	B	Faith of the Seven
+275	Edgar	Yronwood	Dorne	Knight	H	Old Gods
+276	Merrell	Florent	Reach	Septon	E	Many-Faced God
+277	Harkon	Umber	North	Magister	D	
+278	Alyssa	Arryn	Vale	Maester	E	
+279	Alekyne	Florent	Reach	Maester	G	Faith of the Seven
+280	Rosamund	Darry	Riverlands	Magister	B	Old Gods
+281	Roland	Darry	Riverlands	Maester	B	Faith of the Seven
+282	Rickard	Stark	North	Maester	B	Faith of the Seven
+283	Torman	Peake	Reach	Maester	E	Many-Faced God
+284	Janna	Redwyne	Reach	Maester	B	Faith of the Seven
+285	Barris	Hightower	Reach	Maester	B	Faith of the Seven
+286	Lyanna	Stark	North	Maester	B	
+287	Aegor	Rivers	Riverlands	Knight	E	Lord of Light
+288	Lucas	Tyrell	Reach	Maester	B	Faith of the Seven
+289	Lanna	Lannister	Westerlands	Maester	I	Many-Faced God
+290	Brynden	Rivers	Riverlands	Maester	D	Faith of the Seven
+291	Gael	Redwyne	Reach	Maester	B	
+292	Robard	Hightower	Reach	Septon	F	Old Gods
+293	Tywin	Lannister	Westerlands	Maester	B	Faith of the Seven
+294	Finn	Umber	North	Knight	K	
+295	Melantha	Blackwood	Riverlands	Maester	B	
+296	Alysanne	Farman	Westerlands	Septon	E	
+297	Bryndon	Hightower	Reach	Maester	E	Faith of the Seven
+298	Mycah	Umber	North	Maester	C	Faith of the Seven
+299	Harrion	Karstark	North	Septon	H	Lord of Light
+300	Ellard	Stark	North	Maester	E	Faith of the Seven
+301	Eddison	Peake	Reach	Maester	B	Faith of the Seven
+302	Lyonel	Frey	Riverlands	Maester	J	Faith of the Seven
+303	Beron	Stark	North	Maester	B	Many-Faced God
+304	Jonos	Stark	North	Maester	B	
+305	Danelle	Redwyne	Reach	Maester	B	Faith of the Seven
+306	Bennarion	Umber	North	Septon	E	Many-Faced God
+307	Mina	Tyrell	Reach	Maester	E	Faith of the Seven
+308	Alesander	Frey	Riverlands	Septon	E	Faith of the Seven
+309	Tommard	Karstark	North	Maester	B	Faith of the Seven
+310	Orryn	Florent	Reach	Maester	B	Many-Faced God
+311	Gedmund	Peake	Reach	Maester	B	
+312	Andros	Rivers	Riverlands	Maester	D	Old Gods
+313	Galon	Florent	Reach	Maester	B	Many-Faced God
+314	Jessamyn	Manderly	North	Maester	B	Faith of the Seven
+315	Alysanne	Hightower	Reach	Maester	E	Many-Faced God
+316	Harlen	Tyrell	Reach	Magister	E	
+317	Uther	Peake	Reach	Knight	H	
+318	Leyla	Hightower	Reach	Septon	E	
+319	Ben	Beesbury	Reach	Magister	E	
+320	Merlon	Crakehall	Westerlands	Maester	B	Faith of the Seven
+321	Walder	Frey	Riverlands	Septon	E	
+322	Elric	Stark	North	Maester	B	Faith of the Seven
+323	Cynthea	Frey	Riverlands	Maester	E	Faith of the Seven
+324	Ryger	Rivers	Riverlands	Maester	B	Faith of the Seven
+325	Melesa	Crakehall	Westerlands	Maester	J	Many-Faced God
+326	Manfryd	Redwyne	Reach	Maester	J	Faith of the Seven
+327	Raya	Stark	North	Septon	E	
+328	Mors	Martell	Dorne	Septon	H	Old Gods
+329	Betha	Blackwood	Riverlands	Septon	E	Many-Faced God
+330	Gyles	Yronwood	Dorne	Maester	B	Faith of the Seven
+331	Triston	Hightower	Reach	Maester	E	Faith of the Seven
+332	Lollys	Peake	Reach	Magister	B	
+333	Gerold	Lannister	Westerlands	Maester	C	
+334	Hobert	Hightower	Reach	Maester	B	
+335	Ynys	Yronwood	Dorne	Maester	B	
+336	Lucas	Blackwood	Riverlands	Knight	F	Old Gods
+337	Jon	Florent	Reach	Maester	H	Faith of the Seven
+338	Melessa	Florent	Reach	Septon	E	Many-Faced God
+339	Steely	Redwyne	Reach	Maester	B	Faith of the Seven
+340	Bennard	Stark	North	Maester	B	Many-Faced God
+341	Ormond	Yronwood	Dorne	Maester	I	Faith of the Seven
+342	Benjicot	Blackwood	Riverlands	Maester	B	
+343	Marq	Farman	Westerlands	Magister	E	Faith of the Seven
+344	Preston	Florent	Reach	Septon	E	Faith of the Seven
+345	Bethany	Redwyne	Reach	Septon	I	
+346	Donnel	Hill	Westerlands	Maester	E	Faith of the Seven
+347	Androw	Farman	Westerlands	Magister	D	
+348	Berena	Stark	North	Maester	B	Faith of the Seven
+349	Nymeria	Sand	Dorne	Septon	C	Old Gods
+350	Torgen	Oakheart	Reach	Maester	B	Faith of the Seven
+351	Pimply	Florent	Reach	Maester	B	Many-Faced God
+352	Ronnel	Arryn	Vale	Maester	B	Faith of the Seven
+353	Halleck	Peake	Reach	Maester	D	Old Gods
+354	Morgana	Umber	North	Maester	D	Faith of the Seven
+355	Jonos	Frey	Riverlands	Maester	B	
+356	Alaric	Stark	North	Septon	E	Old Gods
+357	Wylla	Manderly	North	Maester	B	Faith of the Seven
+358	Danny	Flint	North	Maester	G	Faith of the Seven
+359	Barbara	Bracken	Riverlands	Maester	B	Faith of the Seven
+360	Lyonel	Tyrell	Reach	Maester	I	Faith of the Seven
+361	Willam	Stark	North	Septon	E	Faith of the Seven
+362	Lord	Florent	Reach	Septon	E	Old Gods
+363	Alester	Oakheart	Reach	Maester	E	Faith of the Seven
+364	Hugo	Arryn	Vale	Maester	E	Faith of the Seven
+365	Jaime	Lannister	Westerlands	Maester	E	Faith of the Seven
+366	Catelyn	Bracken	Riverlands	Maester	D	Lord of Light
+367	Addam	Rivers	Riverlands	Knight	E	Old Gods
+368	Aubrey	Crakehall	Westerlands	Maester	I	Faith of the Seven
+369	Morion	Martell	Dorne	Septon	C	Faith of the Seven
+370	Dacey	Mormont	North	Septon	H	
+371	Branda	Stark	North	Knight	K	Faith of the Seven
+372	Alyssa	Blackwood	Riverlands	Maester	E	Many-Faced God
+373	Willem	Darry	Riverlands	Maester	E	Faith of the Seven
+374	Tya	Lannister	Westerlands	Maester	B	
+375	Gunthor	Hightower	Reach	Maester	B	Faith of the Seven
+376	Carolei	Florent	Reach	Maester	B	Faith of the Seven
+377	Alester	Tyrell	Reach	Maester	I	Many-Faced God
+378	Patrice	Hightower	Reach	Maester	B	
+379	Hobber	Redwyne	Reach	Septon	E	Faith of the Seven
+380	Deria	Martell	Dorne	Septon	H	Old Gods
+381	Donnor	Stark	North	Maester	B	
+382	Tyene	Sand	Dorne	Septon	C	Many-Faced God
+383	Roderick	Blackwood	Riverlands	Maester	B	
+384	Burton	Crakehall	Westerlands	Maester	J	Faith of the Seven
+385	Elmar	Frey	Riverlands	Maester	B	Faith of the Seven
+386	Lord	Arryn	Vale	Maester	B	Faith of the Seven
+387	Garmon	Hightower	Reach	Maester	B	Faith of the Seven
+388	Peremore	Hightower	Reach	Maester	B	
+389	Aemma	Arryn	Vale	Magister	E	
+390	Tom	Hightower	Reach	Septon	E	Many-Faced God
+391	Jeyne	Farman	Westerlands	Maester	B	
+392	Quentin	Tyrell	Reach	Maester	B	
+393	Patricia	Redwyne	Reach	Maester	B	Faith of the Seven
+394	Quentyn	Blackwood	Riverlands	Maester	B	
+395	Robett	Glover	North	Magister	G	Faith of the Seven
+396	Corlys	Umber	North	Maester	E	Faith of the Seven
+397	Arnolf	Karstark	North	Knight	E	Lord of Light
+398	Jayne	Bracken	Riverlands	Maester	B	
+399	Lyman	Beesbury	Reach	Septon	E	Old Gods
+400	Rosamund	Lannister	Westerlands	Maester	J	Faith of the Seven
+401	Cersei	Frey	Riverlands	Maester	D	Faith of the Seven
+402	Norman	Hightower	Reach	Maester	B	
+403	Martyn	Tyrell	Reach	Magister	E	
+404	Doran	Martell	Dorne	Magister	E	
+405	Jon	Arryn	Vale	Knight	E	Old Gods
+406	Allar	Tyrell	Reach	Maester	D	Faith of the Seven
+407	Oswin	Arryn	Vale	Knight	E	Old Gods
+408	Roland	Crakehall	Westerlands	Maester	B	Faith of the Seven
+409	Benjen	Stark	North	Maester	J	Faith of the Seven
+410	Meryn	Peake	Reach	Maester	B	Faith of the Seven
+411	Yoren	Yronwood	Dorne	Maester	E	Faith of the Seven
+412	Lyonel	Hightower	Reach	Knight	E	Old Gods
+413	Malora	Hightower	Reach	Knight	E	Old Gods
+414	Willam	Royce	Vale	Maester	B	Faith of the Seven
+415	Desmond	Redwyne	Reach	Maester	J	Faith of the Seven
+416	Alla	Tyrell	Reach	Knight	E	Old Gods
+417	Paxter	Redwyne	Reach	Septon	E	
+418	Elyas	Redwyne	Reach	Maester	B	
+419	Maynard	Umber	North	Maester	G	Faith of the Seven
+420	Amaury	Peake	Reach	Septon	E	Old Gods
+421	Jacelyn	Bracken	Riverlands	Maester	B	
+422	Jeyne	Rivers	Riverlands	Knight	E	Lord of Light
+423	Garlan	Tyrell	Reach	Maester	B	Faith of the Seven
+424	Aladore	Florent	Reach	Maester	B	Faith of the Seven
+425	Ormund	Hightower	Reach	Maester	B	Faith of the Seven
+426	Morya	Frey	Riverlands	Maester	D	Faith of the Seven
+427	Elissa	Farman	Westerlands	Maester	B	Faith of the Seven
+428	Lord	Frey	Riverlands	Maester	E	
+429	Kear	Umber	North	Maester	E	Faith of the Seven
+430	Mace	Tyrell	Reach	Septon	E	
+431	Gwayne	Oakheart	Reach	Knight	I	Lord of Light
+432	Tygett	Lannister	Westerlands	Maester	H	Faith of the Seven
+433	Miller's	Crakehall	Westerlands	Septon	E	Many-Faced God
+434	Lord	Peake	Reach	Knight	I	Old Gods
+435	Bennifer	Blackwood	Riverlands	Maester	B	
+436	Rodrik	Flint	North	Maester	B	Faith of the Seven
+437	Leona	Tyrell	Reach	Maester	D	Faith of the Seven
+438	Margaret	Karstark	North	Knight	G	Old Gods
+439	Martyn	Rivers	Riverlands	Maester	E	Faith of the Seven
+440	Aemon	Rivers	Riverlands	Septon	E	
+441	Desmond	Manderly	North	Septon	H	Faith of the Seven
+442	Matthos	Tyrell	Reach	Maester	B	
+443	Morgan	Hightower	Reach	Septon	I	Faith of the Seven
+444	Runceford	Redwyne	Reach	Septon	I	Faith of the Seven
+445	Brynden	Blackwood	Riverlands	Maester	B	Old Gods
+446	Erren	Florent	Reach	Maester	G	Faith of the Seven
+447	Olene	Tyrell	Reach	Maester	D	Faith of the Seven
+448	Tytos	Lannister	Westerlands	Maester	B	
+449	Addam	Hightower	Reach	Maester	B	
+450	Hothor	Umber	North	Maester	B	Faith of the Seven
+451	Osmund	Tyrell	Reach	Knight	E	Old Gods
+452	Myrielle	Peake	Reach	Maester	J	Faith of the Seven
+453	Edwyle	Stark	North	Maester	B	Old Gods
+454	Gwenys	Rivers	Riverlands	Knight	E	Old Gods
+455	Eyron	Stark	North	Knight	E	Old Gods
+456	Agnes	Blackwood	Riverlands	Maester	E	Many-Faced God
+457	Amos	Bracken	Riverlands	Maester	E	Faith of the Seven
+458	Lyarra	Stark	North	Maester	B	
+459	Jeffory	Mallister	Riverlands	Maester	B	Lord of Light
+460	Barba	Bracken	Riverlands	Septon	E	Lord of Light
+461	Moryn	Tyrell	Reach	Maester	B	
+462	Galladon	Bracken	Riverlands	Maester	D	Many-Faced God
+463	Desmera	Redwyne	Reach	Maester	G	Faith of the Seven
+464	Gwayne	Hightower	Reach	Maester	B	Faith of the Seven
+465	Morgil	Peake	Reach	Maester	D	Faith of the Seven
+466	Archibald	Yronwood	Dorne	Magister	E	
+467	Perianne	Redwyne	Reach	Magister	B	Many-Faced God
+468	Lord	Blackwood	Riverlands	Maester	J	Many-Faced God
+469	Robert	Blackwood	Riverlands	Septon	E	Many-Faced God
+470	Perriane	Frey	Riverlands	Maester	B	
+471	Harmond	Umber	North	Maester	E	Faith of the Seven
+472	Martyn	Hightower	Reach	Maester	E	
+473	Armen	Peake	Reach	Septon	E	Old Gods
+474	Della	Frey	Riverlands	Maester	B	Faith of the Seven
+475	Arthor	Oakheart	Reach	Maester	E	Faith of the Seven
+476	Humfrey	Beesbury	Reach	Maester	D	Many-Faced God
+477	Dagos	Manwoody	Dorne	Septon	H	Faith of the Seven
+478	Emilia	Umber	North	Maester	B	Faith of the Seven
+479	Delena	Florent	Reach	Maester	D	Many-Faced God
+480	Leyton	Hightower	Reach	Maester	B	
+481	Alysanne	Blackwood	Riverlands	Maester	H	Many-Faced God
+482	Edwyn	Stark	North	Maester	B	Faith of the Seven
+483	Dorea	Sand	Dorne	Septon	G	Old Gods
+484	Lyle	Bracken	Riverlands	Septon	E	Lord of Light
+485	Wyman	Manderly	North	Maester	B	Faith of the Seven
+486	Hugh	Beesbury	Reach	Maester	B	
+487	Alarra	Stark	North	Maester	B	Faith of the Seven
+488	Osric	Umber	North	Maester	C	Faith of the Seven
+489	Mariya	Darry	Riverlands	Maester	B	Faith of the Seven
+490	Cregard	Stark	North	Maester	J	Many-Faced God
+491	Sansa	Stark	North	Maester	B	Many-Faced God
+492	Jeyne	Beesbury	Reach	Magister	E	
+493	Sebaston	Farman	Westerlands	Maester	I	Faith of the Seven
+494	Bethany	Hightower	Reach	Maester	B	Faith of the Seven
+495	Eustace	Hightower	Reach	Maester	B	Faith of the Seven
+496	Cregan	Stark	North	Maester	E	Faith of the Seven
+497	Lewyn	Martell	Dorne	Septon	H	Old Gods
+498	Robin	Hill	Westerlands	Maester	E	Faith of the Seven
+499	Alyx	Frey	Riverlands	Septon	H	Old Gods
+500	Donnel	Flint	North	Maester	E	Faith of the Seven
+501	Meera	Bracken	Riverlands	Septon	E	
+502	Olenna	Tyrell	Reach	Knight	K	
+503	Olymer	Tyrell	Reach	Maester	D	
+504	Roger	Blackwood	Riverlands	Maester	G	Many-Faced God
+505	Hoster	Blackwood	Riverlands	Maester	D	
+506	Eddard	Stark	North	Septon	H	Faith of the Seven
+507	Edmund	Blackwood	Riverlands	Maester	B	
+508	Mya	Rivers	Riverlands	Knight	I	Lord of Light
+509	Jeyne	Manderly	North	Maester	D	Faith of the Seven
+510	Jason	Lannister	Westerlands	Maester	C	Faith of the Seven
+511	Shirei	Frey	Riverlands	Maester	B	Faith of the Seven
