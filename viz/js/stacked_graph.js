@@ -20,13 +20,16 @@ const print_stacked_graph = function (country) {
       mission_id: d['#mission_id'],
       user_id: d.user_id,
       place_id: d.place_id,
-      date: d.date,
+      date: d3.timeParse("%Y-%m-%d")(d.date),
       duration: +d.duration,
       mode_transport: d.mode,
       co2: +d.co2,
     }
   )).then(function (data) {
 
+    //Filter for the country
+    
+    //data = data.filter(d => d.country == country);
     /**
      * Key selection.
      */
@@ -52,11 +55,11 @@ const print_stacked_graph = function (country) {
 
     // Add X axis.
     const x = d3.scaleTime()
-      .domain(d3.extent(data, function (d) { return new Date(d.date); }))
+      .domain(d3.extent(data, function (d) { return d.date; }))
       .range([0, width]);
     const xAxis = svg.append("g")
       .attr("transform", `translate(0, ${height + 2})`)
-      .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d")));
+      .call(d3.axisBottom(x).ticks().tickSize(6));
     // Add Y axis.
     const y = d3.scaleLinear()
       .domain(d3.extent(data, function (d) { return d.co2; }))
@@ -134,8 +137,7 @@ const print_stacked_graph = function (country) {
        */
 
       //Helper area function (preparing area)
-
-      const myArea = d3.area()
+      const mArea = d3.area()
         .x(function(d) { return d.date })
         .y1(function(d) { return d.co2 })
         .y0(y(0))
@@ -143,8 +145,10 @@ const print_stacked_graph = function (country) {
 
       //Add the area on the svg
       svg.append("path")
-        .attr("fill", 'black')
-        .attr("d", d3.myArea(data))
+        .attr("fill",'black')
+        .attr("stroke","#69b3a2")
+        .attr("d", d3.mArea(data))
+        //.style("fill", function (d) { return color(d.key); }
 
 
 
