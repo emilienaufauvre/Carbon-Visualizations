@@ -2,7 +2,7 @@ const print_stacked_graph = function (country) {
 
   // Set the dimensions and margins of the graph.
   const margin = { top: 60, right: 230, bottom: 50, left: 50 },
-    width = 660 - margin.left - margin.right,
+    width = 1000 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
   // Append the svg object to the body of the page.
@@ -36,10 +36,10 @@ const print_stacked_graph = function (country) {
     const modes_transports = d3.map(data, function (d) { return d.mode_transport; });
     const keys = [... new Set(modes_transports)];
 
-    // We associate a color with each key.
+    // We associate a color with each key (#transports <= 7).
     const color = d3.scaleOrdinal()
       .domain(keys)
-      .range(d3.schemeSet2);
+      .range(d3.schemeCategory10);
 
     //stack the data????????????????????
     const stackedData = d3.stack()
@@ -51,30 +51,30 @@ const print_stacked_graph = function (country) {
      */
 
     // Add X axis.
-    const x = d3.scaleLinear()
-      .domain(d3.extent(data, function (d) { return d.duration; }))
+    const x = d3.scaleTime()
+      .domain(d3.extent(data, function (d) { return new Date(d.date); }))
       .range([0, width]);
     const xAxis = svg.append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x).ticks(5));
+      .attr("transform", `translate(0, ${height + 2})`)
+      .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d")));
     // Add Y axis.
     const y = d3.scaleLinear()
       .domain(d3.extent(data, function (d) { return d.co2; }))
       .range([height, 0]);
     const yAxis = svg.append("g")
-      .attr("transform", `translate(${width}, 0)`)
-      .call(d3.axisRight(y).ticks(5));
+      .attr("transform", `translate(${0}, 0)`)
+      .call(d3.axisLeft(y).ticks().tickSize(6));
 
     // Add X axis label.
     svg.append("text")
       .attr("text-anchor", "end")
       .attr("x", width)
       .attr("y", height + 40)
-      .text("Duration (hours)");
+      .text("Date (time)");
     // Add Y axis label.
     svg.append("text")
       .attr("text-anchor", "end")
-      .attr("x", width)
+      .attr("x", 0)
       .attr("y", -20)
       .text("Co2 emissions (per person per km)")
       .attr("text-anchor", "start");
@@ -103,7 +103,7 @@ const print_stacked_graph = function (country) {
     // Add one dot in the legend for each name/curve/color.
     const dot_size = 20;
     const dist_btw_dot = 5;
-    const x_start = 0;
+    const x_start = 800;
     const y_start = 0;
 
     svg.selectAll("myrect")
@@ -129,23 +129,22 @@ const print_stacked_graph = function (country) {
       .on("mouseover", highlight)
       .on("mouseleave", noHighlight)
 
+      /**
+       * CHART (AREAS)
+       */
+
+      //Helper area function (preparing area)
+
+      const myArea = d3.area()
+        .x(function(d) { return d.date })
+        .y1(function(d) { return d.co2 })
+        .y0(y(0))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      //Add the area on the svg
+      svg.append("path")
+        .attr("fill", 'black')
+        .attr("d", d3.myArea(data))
 
 
 
@@ -165,7 +164,7 @@ const print_stacked_graph = function (country) {
     //////////
 
     // Add a clipPath: everything out of this area won't be drawn.
-    const clip = svg.append("defs").append("svg:clipPath")
+    /*const clip = svg.append("defs").append("svg:clipPath")
       .attr("id", "clip")
       .append("svg:rect")
       .attr("width", width)
@@ -184,7 +183,7 @@ const print_stacked_graph = function (country) {
 
     // Area generator
     const area = d3.area()
-      .x(function (d) { return x(d.data.duration); })
+      .x(function (d) { return x(d.data.date); })
       .y0(function (d) { return y(d[0]); })
       .y1(function (d) { return y(d[1]); })
 
@@ -226,7 +225,7 @@ const print_stacked_graph = function (country) {
         .selectAll("path")
         .transition().duration(1000)
         .attr("d", area)
-    }
+    }*/
   })
 }
 
