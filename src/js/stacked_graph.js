@@ -60,6 +60,14 @@ const filterCountry = async (alpha2, data) => {
         let placeIds = await getPlaceIdsFromCountry(alpha2);
         data = data.filter(d => placeIds.includes(d.placeId));
     }
+
+    return data;
+};
+
+
+const filterMax = (data, mode, max) => {
+
+    return data.filter(d => d[mode.description] < max); 
 };
 
 
@@ -331,8 +339,9 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
  * defined with "alpha2". 
  * @param {} alpha2 country code (e.g. FR for France).
  * @param {} mode define the x values.
+ * @param {} max define the x value max.
  */
-const printStackedGraph = (alpha2, mode) => {
+const printStackedGraph = (alpha2, mode, max) => {
 
     // Append the svg object to the body of the page.
     const { svg, chart } = createSvg();
@@ -352,7 +361,9 @@ const printStackedGraph = (alpha2, mode) => {
 
         // We select only the data corresponding to the
         // given country.
-        await filterCountry(alpha2, data);
+        data = await filterCountry(alpha2, data);
+        // Filter the x value below max.
+        data = filterMax(data, mode, max);
         // Extract keys from dataset, a key being a mode
         // of transport.
         const keys = defineKeys(data);
@@ -371,4 +382,4 @@ const printStackedGraph = (alpha2, mode) => {
 }
 
 
-printStackedGraph("FR", Modes.DATE);
+printStackedGraph("FR", Modes.DATE, new Date('2014-12-17T03:24:00'));
