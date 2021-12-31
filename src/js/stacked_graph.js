@@ -133,9 +133,21 @@ const getScales = (data, mode, yCoord) => {
     yMax = 0;
     yCoord.forEach(d => d.forEach(d_ => yMax = Math.max(yMax, d_[1])));
 
-    const x = d3.scaleLinear()
-        .domain(d3.extent(data, d => d[mode.description]))
-        .range([0, Width]);
+    let x;
+
+    if (mode == Modes.DURATION) {
+
+        x = d3.scaleLinear()
+            .domain(d3.extent(data, d => d[mode.description]))
+            .range([0, Width]);
+    } 
+    else if (mode == Modes.DATE) {
+
+        x = d3.scaleTime()
+            .domain(d3.extent(data, d => new Date(d[mode.description])))
+            .range([0, Width]);
+    }
+
     const y = d3.scaleLinear()
         .domain([0, yMax])
         .range([Height, 0])
@@ -177,11 +189,20 @@ const printAxes = (mode, x, y, svg) => {
         .attr("transform", `translate(${0}, 0)`)
         .call(d3.axisLeft(y).ticks().tickSize(6));
 
+    let xLegend;
+
+    if (mode == Modes.DURATION) {
+        xLegend = "Duration (hours)"
+    }
+    else if (mode == Modes.DATE) {
+        xLegend = "Date"
+    }
+
     svg.append("text")
         .attr("text-anchor", "end")
         .attr("x", Width)
         .attr("y", Height + 40)
-        .text("Duration (hours)");
+        .text(xLegend);
     svg.append("text")
         .attr("text-anchor", "end")
         .attr("x", 0)
@@ -189,7 +210,7 @@ const printAxes = (mode, x, y, svg) => {
         .text("Co2 emissions (per person per km)")
         .attr("text-anchor", "start");
 
-    return xAxis, yAxis;
+    return { xAxis: xAxis, yAxis: yAxis };
 };
 
 
@@ -245,7 +266,7 @@ const printLegend = (mode, keys, svg) => {
 };
 
 
-const addBrushing = (data, x, areas, svg, chart, xAxis) => {
+const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
 
     let idleTimeout;
 
@@ -268,7 +289,7 @@ const addBrushing = (data, x, areas, svg, chart, xAxis) => {
                 return idleTimeout = setTimeout(idled, 350);
             }
 
-            x.domain(d3.extent(data, d => d.year));
+            x.domain(d3.extent(data, d => d[mode]));
         }
         else {
 
@@ -294,7 +315,7 @@ const addBrushing = (data, x, areas, svg, chart, xAxis) => {
 
     const brush = d3.brushX()
         .extent([[0, 0], [Width, Height]])
-        .on("end", updateChart)
+        .on("end", updateChart);
     
     chart.append("g")
         .attr("class", "brush")
@@ -345,9 +366,9 @@ const printStackedGraph = (alpha2, mode) => {
         const { xAxis, yAxis } = printAxes(mode, x, y, svg);
         printLegend(mode, keys, svg);
         // Add user interaction.
-        addBrushing(data, x, areas, svg, chart, xAxis);
+        addBrushing(data, mode, x, areas, svg, chart, xAxis);
     })
 }
 
 
-printStackedGraph("FR", Modes.DURATION);
+printStackedGraph("FR", Modes.DATE);
