@@ -278,7 +278,7 @@ const addSlider = (mode, x, areas, chart, xAxis) => {
     const updateChart = val => {
 
         // Update X axis domain.
-        x.domain([x.domain()    [0], val]);
+        x.domain([x.domain()[0], val]);
         // Update axis and area position.
         xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(5));
         chart.selectAll("path")
