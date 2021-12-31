@@ -6,18 +6,14 @@
     <link rel="stylesheet" href="css/range.css">
 </head>
 
-<!-- Load d3.js. -->
+<!-- Load dependencies. -->
 <script src="../vendor/d3/d3.js"></script>
-
-<!-- Create a div for the duration policy. -->
-<div class="slider">
-    <input type="range" min="1" max="10000" value="10" class="slider" id="myRange", name="maxDuration">
-    <label for="maxDuration">maxDuration</label>
-    <output name="newduration"></output>
-</div>
+<script src="../vendor/d3-simple-slider/d3-simple-slider.js"></script>
 
 <!-- Create a div where the graph will take place. -->
 <div id="my_dataviz"></div>
+<!-- And its slider. -->
+<div id="slider"></div>
 
 <!-- Include the graph. -->
 <script src="js/stacked_graph.js"></script>

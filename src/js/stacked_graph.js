@@ -273,6 +273,56 @@ const printLegend = (mode, keys, svg) => {
 };
 
 
+const addSlider = (mode, x, areas, chart, xAxis) => {
+
+    const updateChart = val => {
+
+        // Update X axis domain.
+        x.domain([x.domain()    [0], val]);
+        // Update axis and area position.
+        xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(5));
+        chart.selectAll("path")
+            .transition().duration(1000)
+            .attr("d", areas);
+    };
+
+    let slider;
+
+    if (mode == Modes.DURATION) {
+
+        slider = d3.sliderBottom()
+            .min(x.domain()[0])
+            .max(x.domain()[1])
+            .width(Width / 2)
+            .tickFormat(d3.format('.5'))
+            .ticks(4)
+            .default(x.domain()[1])
+            .on('onchange', updateChart);
+    }
+    else if (mode == Modes.DATE) {
+
+        slider = d3.sliderBottom()
+            .min(x.domain()[0])
+            .max(x.domain()[1])
+            .width(Width / 2)
+            .step(1000 * 60 * 60 * 24 * 365)
+            .tickFormat(d3.timeFormat('%Y'))
+            .ticks(4)
+            .default(x.domain()[1])
+            .on('onchange', updateChart);
+    }
+
+    let g = d3.select("div#slider")
+            .append("svg")
+                .attr("width", Width)
+                .attr("height", 100)
+            .append("g")
+                .attr("transform", "translate(30,30)");
+
+    g.call(slider);
+}
+
+
 const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
 
     let idleTimeout;
@@ -338,9 +388,8 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
  * defined with "alpha2". 
  * @param {} alpha2 country code (e.g. FR for France).
  * @param {} mode define the x values.
- * @param {} max define the x value max.
  */
-const printStackedGraph = (alpha2, mode, maxData) => {
+const printStackedGraph = (alpha2, mode) => {
 
     // Append the svg object to the body of the page.
     const { svg, chart } = createSvg();
@@ -360,8 +409,6 @@ const printStackedGraph = (alpha2, mode, maxData) => {
         // We select only the data corresponding to the
         // given country.
         data = await filterCountry(alpha2, data);
-        // Filter the x value below max.
-        data = filterMax(data, maxData);
         // Extract keys from dataset, a key being a mode
         // of transport.
         const keys = defineKeys(data);
@@ -376,39 +423,11 @@ const printStackedGraph = (alpha2, mode, maxData) => {
         printLegend(mode, keys, svg);
         // Add user interaction.
         addBrushing(data, mode, x, areas, svg, chart, xAxis);
+        addSlider(mode, x, areas, chart, xAxis);
     })
 }
 
-/*
-* MAIN
-*/
 
-//By default mode
-selectedMode = Modes.DATE
 
-//SLIDER
 
-var slider = document.getElementById("myRange");
-var output = document.querySelector('output');
-var v = document.getElementById("myRange").value;
-
-output.innerHTML = v; 
-
-//Disable the slider if we are in DURATION mode (no interest)
-if (selectedMode != Modes.DURATION)
-{
-    //Policy handler for the slider
-    slider.addEventListener('input', function () {
-        //read value from the slider
-        var v = document.getElementById("myRange").value;
-        output.innerHTML = v;
-        d3.select("svg").remove();
-        //update the graph
-        printStackedGraph("FR", selectedMode, v);
-    }, false);
-}
-
-//STACKED GRAPH 
-
-//StackedGraph for a given country
-printStackedGraph("FR", selectedMode, 10000);
+printStackedGraph("FR", Modes.DURATION);
