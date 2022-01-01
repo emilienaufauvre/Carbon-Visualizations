@@ -7,25 +7,48 @@ const Modes = Object.freeze({
 });
 
 /**
+ * Define the graph colors.
+ */
+const Themes = Object.freeze({
+    LIGHT:   Symbol("light"),
+    DARK:  Symbol("dark"),
+});
+
+/**
  * Define the dimensions of the graph.
  */
 const Margin = { top: 60, right: 230, bottom: 50, left: 50 };
 const Width = 1000 - Margin.left - Margin.right;
 const Height = 400 - Margin.top - Margin.bottom;
 
+/**
+ * Set the theme.
+ */
+const Theme = Themes.DARK;
+
+
+
+const setBackground = () => {
+
+    d3.select("body")
+        .style("background", Theme == Themes.DARK ? "#1b1e23" : "none")
+}
 
 
 const createSvg = () => {
 
-    const svg = d3.select("#my_dataviz")
+    const svg = d3.select("#stacked_graph")
         .append("svg")
-        .attr("width", Width + Margin.left + Margin.right)
-        .attr("height", Height + Margin.top + Margin.bottom)
+            .attr("width", Width + Margin.left + Margin.right)
+            .attr("height", Height + Margin.top + Margin.bottom)
+            .style("color", Theme == Themes.DARK ? "#fff" : "#1b1e23")
         .append("g")
-        .attr("transform",
-            `translate(${Margin.left}, ${Margin.top})`);
-    const chart = svg.append('g')
-        .attr("clip-path", "url(#clip)")
+            .attr("transform",
+                `translate(${Margin.left},
+                ${Margin.top})`)
+            .attr("fill", Theme == Themes.DARK ? "lightsteelblue" : "steelblue");
+    const chart = svg.append("g")
+        .attr("clip-path", "url(#clip)");
 
     return { svg: svg, chart: chart };
 }
@@ -64,9 +87,9 @@ const filterCountry = async (alpha2, data) => {
 };
 
 
-const filterMax = (data, maxData) => {
+const filterMax = (data, mode, maxData) => {
 
-    return data.filter(d => d.duration <= maxData); 
+    return data.filter(d => d[mode.description] <= maxData); 
 };
 
 
@@ -74,7 +97,12 @@ const defineKeys = data => {
 
     const modesTransports = d3.map(data, d => d.modeTransport);
     // Eliminate duplicates.
-    return [... new Set(modesTransports)];
+    const keys = [... new Set(modesTransports)];
+    // Associate a color with each key. 
+    const colors = d3.scaleOrdinal()
+        .domain(keys)
+        .range(d3.schemeCategory10);
+    return { keys: keys, colors: colors };
 }; 
 
 
@@ -164,24 +192,20 @@ const getScales = (data, mode, yCoord) => {
 };
 
 
-const printAreas = (mode, keys, x, y, yCoord, chart) => {
+const printAreas = (mode, keys, colors, x, y, yCoord, chart) => {
 
-    // Associate a color with each key. 
-    const colors = d3.scaleOrdinal()
-        .domain(keys)
-        .range(d3.schemeCategory10);
     // Generate areas.  
     const areas = d3.area()
         .x(d => x(d.data.public[mode.description]))
         .y0(d => y(d[0]))
         .y1(d => y(d[1]));
     // Print them
-    chart.selectAll("mylayers")
+    chart.selectAll("myLayers")
         .data(yCoord)
         .join("path")
-        .style("fill", d => colors(d.key))
-        .attr("class", d =>"myArea " + d.key)
-        .attr("d", areas);
+            .style("fill", d => colors(d.key))
+            .attr("class", d => "myArea " + d.key)
+            .attr("d", areas);
 
     return areas;
 };
@@ -199,9 +223,11 @@ const printAxes = (mode, x, y, svg) => {
     let xLegend;
 
     if (mode == Modes.DURATION) {
+
         xLegend = "Duration (hours)"
     }
     else if (mode == Modes.DATE) {
+
         xLegend = "Date"
     }
 
@@ -221,12 +247,7 @@ const printAxes = (mode, x, y, svg) => {
 };
 
 
-const printLegend = (mode, keys, svg) => {
-
-    // Associate a color with each key. 
-    const colors = d3.scaleOrdinal()
-        .domain(keys)
-        .range(d3.schemeCategory10);
+const printLegend = (mode, keys, colors, svg) => {
 
     // Add user interaction:
     // Handler when an area is selected (atStart).
@@ -273,51 +294,72 @@ const printLegend = (mode, keys, svg) => {
 };
 
 
-const addSlider = (mode, x, areas, chart, xAxis) => {
+const addSlider = (data, mode, keys, colors, x, y, chart) => {
 
     const updateChart = val => {
 
-        // Update X axis domain.
-        x.domain([x.domain()[0], val]);
-        // Update axis and area position.
-        xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(5));
-        chart.selectAll("path")
-            .transition().duration(1000)
-            .attr("d", areas);
+        if (mode == Modes.DURATION) {
+
+            data_ = filterMax(data, Modes.DATE, val);
+        }
+        else if (mode == Modes.DATE) {
+
+            data_ = filterMax(data, Modes.DURATION, val);
+        }
+
+        // Compute changes.
+        const yCoord = extractCoordinates(data_, mode, keys);
+        const areas = d3.area()
+            .x(d => x(d.data.public[mode.description]))
+            .y0(d => y(d[0]))
+            .y1(d => y(d[1]));
+        // Print changes.
+        chart.selectAll(".myArea").remove()
+        chart.selectAll("myLayers")
+            .data(yCoord)
+            .join("path")
+                .style("fill", d => colors(d.key))
+                .attr("class", d => "myArea " + d.key)
+                .attr("d", areas);
     };
 
     let slider;
 
     if (mode == Modes.DURATION) {
 
+        const extent = d3.extent(data, d => new Date(d.date));
         slider = d3.sliderBottom()
-            .min(x.domain()[0])
-            .max(x.domain()[1])
-            .width(Width / 2)
-            .tickFormat(d3.format('.5'))
-            .ticks(4)
-            .default(x.domain()[1])
-            .on('onchange', updateChart);
-    }
-    else if (mode == Modes.DATE) {
-
-        slider = d3.sliderBottom()
-            .min(x.domain()[0])
-            .max(x.domain()[1])
+            .min(extent[0])
+            .max(extent[1])
             .width(Width / 2)
             .step(1000 * 60 * 60 * 24 * 365)
             .tickFormat(d3.timeFormat('%Y'))
             .ticks(4)
-            .default(x.domain()[1])
+            .default(extent[1])
+            .on('onchange', updateChart);
+    }
+    else if (mode == Modes.DATE) {
+
+        const extent = d3.extent(data, d => d.duration);
+        slider = d3.sliderBottom()
+            .min(extent[0])
+            .max(extent[1])
+            .width(Width / 2)
+            .tickFormat(d3.format('.5'))
+            .ticks(4)
+            .default(extent[1])
             .on('onchange', updateChart);
     }
 
-    let g = d3.select("div#slider")
+    let g = d3.select("#stacked_graph")
             .append("svg")
                 .attr("width", Width)
                 .attr("height", 100)
+                .style("color", Theme == Themes.DARK ? "#fff" : "#1b1e23")
             .append("g")
-                .attr("transform", "translate(30,30)");
+                .attr("transform", `translate(
+                    ${(Width + Margin.left + Margin.right) / 2 - ((Width / 2) / 2)}, 30)`)
+                .attr("fill", Theme == Themes.DARK ? "lightsteelblue" : "steelblue");
 
     g.call(slider);
 }
@@ -357,18 +399,20 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
         // Update axis and area position.
         xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(5));
         chart.selectAll("path")
-            .transition().duration(1000)
+            .transition()
+                .duration(1000)
             .attr("d", areas);
     };
 
     // Add a clipPath: everything out of this area won't be drawn.
-    const clip = svg.append("defs").append("svg:clipPath")
-        .attr("id", "clip")
+    const clip = svg.append("defs")
+        .append("svg:clipPath")
+            .attr("id", "clip")
         .append("svg:rect")
-        .attr("width", Width)
-        .attr("height", Height)
-        .attr("x", 0)
-        .attr("y", 0);
+            .attr("width", Width)
+            .attr("height", Height)
+            .attr("x", 0)
+            .attr("y", 0);
 
     const brush = d3.brushX()
         .extent([[0, 0], [Width, Height]])
@@ -391,6 +435,7 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
  */
 const printStackedGraph = (alpha2, mode) => {
 
+    setBackground();
     // Append the svg object to the body of the page.
     const { svg, chart } = createSvg();
 
@@ -411,23 +456,23 @@ const printStackedGraph = (alpha2, mode) => {
         data = await filterCountry(alpha2, data);
         // Extract keys from dataset, a key being a mode
         // of transport.
-        const keys = defineKeys(data);
+        const { keys, colors } = defineKeys(data);
         // For each x value and each key, get the y value 
         // corresponding.
         const yCoord = extractCoordinates(data, mode, keys);
         // Get the chart scales.
         const { x, y } = getScales(data, mode, yCoord);
         // Print the graph. 
-        const areas = printAreas(mode, keys, x, y, yCoord, chart);
+        const areas = printAreas(mode, keys, colors, x, y, yCoord, chart);
         const { xAxis, yAxis } = printAxes(mode, x, y, svg);
-        printLegend(mode, keys, svg);
+        printLegend(mode, keys, colors, svg);
         // Add user interaction.
         addBrushing(data, mode, x, areas, svg, chart, xAxis);
-        addSlider(mode, x, areas, chart, xAxis);
+        addSlider(data, mode, keys, colors, x, y, chart);
     })
 }
 
 
 
 
-printStackedGraph("FR", Modes.DURATION);
+printStackedGraph("FR", Modes.DATE);
