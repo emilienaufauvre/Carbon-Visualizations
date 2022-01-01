@@ -26,11 +26,30 @@ const setBackground = () => {
 }
 
 
-const createSvg = () => {
+const createSvg = (projection) => {
+    // Check for the longitude + latitude 
+    // of where user clicks.
+    const onClick = (event, d) => {
+        const coord = projection.invert([
+            event.pageX - Margin.left,
+            event.pageY - Margin.top]);
+
+        console.log(coord[0] + " " + coord[1]);
+
+        // TODO
+        // TODO
+        // TODO
+        // TODO open stacked graph.
+        // TODO
+        // TODO
+        // TODO
+    }
+
     const svg = d3.select("#bubble_map")
         .append("svg")
             .attr("width", Width + Margin.left + Margin.right)
             .attr("height", Height + Margin.top + Margin.bottom)
+            .on("mouseover", onClick) 
         .append("g")
             .attr("transform",
                 `translate(${Margin.left},
@@ -175,10 +194,10 @@ const printTitle = (svg) => {
 const printBubbleMap = () => {
     // Set body bg depending on theme.
     setBackground();
-    // Create the map container.
-    const svg = createSvg();
     // Get the map projection for data.
     projection = getProjection();
+    // Create the map container.
+    const svg = createSvg(projection);
     // Print the world map using a geojson.
     printMap(svg, projection);
     // Parse data and print bubbles. 
