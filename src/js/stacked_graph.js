@@ -1,17 +1,17 @@
 /**
- * Define the x values of the graph.
- */
-const Modes = Object.freeze({
-    DURATION:   Symbol("duration"),
-    DATE:  Symbol("date"),
-});
-
-/**
  * Define the graph colors.
  */
 const Themes = Object.freeze({
     LIGHT:   Symbol("light"),
     DARK:  Symbol("dark"),
+});
+
+/**
+ * Define the x values of the graph.
+ */
+const Modes = Object.freeze({
+    DURATION:   Symbol("duration"),
+    DATE:  Symbol("date"),
 });
 
 /**
@@ -29,24 +29,27 @@ const Theme = Themes.DARK;
 
 
 const setBackground = () => {
-
     d3.select("body")
-        .style("background", Theme == Themes.DARK ? "#1b1e23" : "none")
+        .style("background", Theme == Themes.DARK ? 
+            "#1b1e23" : "none")
 }
 
 
 const createSvg = () => {
-
     const svg = d3.select("#stacked_graph")
         .append("svg")
-            .attr("width", Width + Margin.left + Margin.right)
-            .attr("height", Height + Margin.top + Margin.bottom)
-            .style("color", Theme == Themes.DARK ? "#fff" : "#1b1e23")
+            .attr("width", Width + Margin.left 
+                + Margin.right)
+            .attr("height", Height + Margin.top 
+                + Margin.bottom)
+            .style("color", Theme == Themes.DARK ? 
+                "#fff" : "#1b1e23")
         .append("g")
             .attr("transform",
                 `translate(${Margin.left},
                 ${Margin.top})`)
-            .attr("fill", Theme == Themes.DARK ? "lightsteelblue" : "steelblue");
+            .attr("fill", Theme == Themes.DARK ? 
+                "lightsteelblue" : "steelblue");
     const chart = svg.append("g")
         .attr("clip-path", "url(#clip)");
 
@@ -55,7 +58,6 @@ const createSvg = () => {
 
 
 const getPlaceIdsFromCountry = async alpha2 => {
-
     let placeIds;
 
     await d3.tsv("../data/places.tsv", d => (
@@ -65,7 +67,6 @@ const getPlaceIdsFromCountry = async alpha2 => {
             country: d.country,
         }
     )).then(data => {
-
         data = data.filter(d => d.country === alpha2);
         placeIds = data.map(d => d.placeId);
     });
@@ -75,7 +76,6 @@ const getPlaceIdsFromCountry = async alpha2 => {
 
 
 const filterCountry = async (alpha2, data) => {
-
     if (alpha2 !== "") {
         // Get an array with all the place IDs correcponding
         // to the given country.
@@ -88,13 +88,11 @@ const filterCountry = async (alpha2, data) => {
 
 
 const filterMax = (data, mode, maxData) => {
-
     return data.filter(d => d[mode.description] <= maxData); 
 };
 
 
 const defineKeys = data => {
-
     const modesTransports = d3.map(data, d => d.modeTransport);
     // Eliminate duplicates.
     const keys = [... new Set(modesTransports)];
@@ -107,9 +105,9 @@ const defineKeys = data => {
 
 
 const extractCoordinates = (data, mode, keys) => {
-
     // We sort the data using the mode as the comparator.
-    data.sort((d1, d2) => d1[mode.description] - d2[mode.description]);
+    data.sort((d1, d2) => 
+        d1[mode.description] - d2[mode.description]);
     // We group the data such that each value of the X axis
     // is represented by an array.
     const xCoord = d3.group(data, d => d[mode.description]);
@@ -118,11 +116,9 @@ const extractCoordinates = (data, mode, keys) => {
     const xCoordRefined = [];
 
     xCoord.forEach(row => {
-
         const rowRefined = [];
 
         keys.forEach(k => {
-
             let previousSum = (xCoordRefined.length == 0) ?
                 0 : xCoordRefined.at(-1)[k].co2,
                 sum = 0,
@@ -130,7 +126,6 @@ const extractCoordinates = (data, mode, keys) => {
                 currentMode = 0;
 
             row.forEach(d => {
-
                 currentMode = d[mode.description];
 
                 if (d.modeTransport == k) {
@@ -163,23 +158,23 @@ const extractCoordinates = (data, mode, keys) => {
 
 
 const getScales = (data, mode, yCoord) => {
-
     // We determine the maximum value of Y axis.
     yMax = 0;
-    yCoord.forEach(d => d.forEach(d_ => yMax = Math.max(yMax, d_[1])));
+    yCoord.forEach(d => d.forEach(d_ => 
+        yMax = Math.max(yMax, d_[1])));
 
     let x;
 
     if (mode == Modes.DURATION) {
-
         x = d3.scaleLinear()
-            .domain(d3.extent(data, d => d[mode.description]))
+            .domain(d3.extent(data, d => 
+                d[mode.description]))
             .range([0, Width]);
     } 
     else if (mode == Modes.DATE) {
-
         x = d3.scaleTime()
-            .domain(d3.extent(data, d => new Date(d[mode.description])))
+            .domain(d3.extent(data, d => 
+                new Date(d[mode.description])))
             .range([0, Width]);
     }
 
@@ -193,7 +188,6 @@ const getScales = (data, mode, yCoord) => {
 
 
 const printAreas = (mode, keys, colors, x, y, yCoord, chart) => {
-
     // Generate areas.  
     const areas = d3.area()
         .x(d => x(d.data.public[mode.description]))
@@ -212,7 +206,6 @@ const printAreas = (mode, keys, colors, x, y, yCoord, chart) => {
 
 
 const printAxes = (mode, x, y, svg) => {
-
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${Height + 2})`)
         .call(d3.axisBottom(x).ticks().tickSize(6));
@@ -223,11 +216,9 @@ const printAxes = (mode, x, y, svg) => {
     let xLegend;
 
     if (mode == Modes.DURATION) {
-
         xLegend = "Duration (hours)"
     }
     else if (mode == Modes.DATE) {
-
         xLegend = "Date"
     }
 
@@ -248,7 +239,6 @@ const printAxes = (mode, x, y, svg) => {
 
 
 const printLegend = (mode, keys, colors, svg) => {
-
     // Add user interaction:
     // Handler when an area is selected (atStart).
     const highlight = (event, d) => {
@@ -272,38 +262,38 @@ const printLegend = (mode, keys, colors, svg) => {
     svg.selectAll("myrect")
         .data(keys)
         .join("rect")
-        .attr("x", xStart)
-        .attr("y", (d, i) => yStart + i * (dotSize + distBtwDots))
-        .attr("width", dotSize)
-        .attr("height", dotSize)
-        .style("fill", d => colors(d))
-        .on("mouseover", highlight)
-        .on("mouseleave", noHighlight)
+            .attr("x", xStart)
+            .attr("y", (d, i) => 
+                yStart + i * (dotSize + distBtwDots))
+            .attr("width", dotSize)
+            .attr("height", dotSize)
+            .style("fill", d => colors(d))
+            .on("mouseover", highlight)
+            .on("mouseleave", noHighlight)
 
     svg.selectAll("mylabels")
         .data(keys)
         .join("text")
-        .attr("x", xStart + dotSize * 1.2)
-        .attr("y", (d, i) => yStart + i * (dotSize + distBtwDots) + (dotSize / 2))
-        .style("fill", d => colors(d))
-        .text(d => d)
-        .attr("text-anchor", "left")
-        .style("alignment-baseline", "middle")
-        .on("mouseover", highlight)
-        .on("mouseleave", noHighlight)
+            .attr("x", xStart + dotSize * 1.2)
+            .attr("y", (d, i) => 
+                yStart + i * (dotSize + distBtwDots) 
+                + (dotSize / 2))
+            .style("fill", d => colors(d))
+            .text(d => d)
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
+            .on("mouseover", highlight)
+            .on("mouseleave", noHighlight)
 };
 
 
 const addSlider = (data, mode, keys, colors, x, y, chart) => {
-
     const updateChart = val => {
 
         if (mode == Modes.DURATION) {
-
             data_ = filterMax(data, Modes.DATE, val);
         }
         else if (mode == Modes.DATE) {
-
             data_ = filterMax(data, Modes.DURATION, val);
         }
 
@@ -326,7 +316,6 @@ const addSlider = (data, mode, keys, colors, x, y, chart) => {
     let slider;
 
     if (mode == Modes.DURATION) {
-
         const extent = d3.extent(data, d => new Date(d.date));
         slider = d3.sliderBottom()
             .min(extent[0])
@@ -339,7 +328,6 @@ const addSlider = (data, mode, keys, colors, x, y, chart) => {
             .on('onchange', updateChart);
     }
     else if (mode == Modes.DATE) {
-
         const extent = d3.extent(data, d => d.duration);
         slider = d3.sliderBottom()
             .min(extent[0])
@@ -355,22 +343,23 @@ const addSlider = (data, mode, keys, colors, x, y, chart) => {
             .append("svg")
                 .attr("width", Width)
                 .attr("height", 100)
-                .style("color", Theme == Themes.DARK ? "#fff" : "#1b1e23")
+                .style("color", Theme == Themes.DARK ? 
+                    "#fff" : "#1b1e23")
             .append("g")
                 .attr("transform", `translate(
-                    ${(Width + Margin.left + Margin.right) / 2 - ((Width / 2) / 2)}, 30)`)
-                .attr("fill", Theme == Themes.DARK ? "lightsteelblue" : "steelblue");
+                    ${(Width + Margin.left + Margin.right) / 2
+                    - ((Width / 2) / 2)}, 30)`)
+                .attr("fill", Theme == Themes.DARK ? 
+                    "lightsteelblue" : "steelblue");
 
     g.call(slider);
 }
 
 
 const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
-
     let idleTimeout;
 
     const idled = () => { 
-
         idleTimeout = null; 
     };
 
@@ -382,16 +371,13 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
         // If no selection, back to initial coordinate. 
         // Otherwise, update X axis domain.
         if (! extent) {
-
             if (! idleTimeout) {
-
                 return idleTimeout = setTimeout(idled, 350);
             }
 
             x.domain(d3.extent(data, d => d[mode]));
         }
         else {
-
             x.domain([x.invert(extent[0]), x.invert(extent[1])]);
             chart.select(".brush").call(brush.move, null);
         }
@@ -434,7 +420,7 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
  * @param {} mode define the x values.
  */
 const printStackedGraph = (alpha2, mode) => {
-
+    // Set body bg depending on theme.
     setBackground();
     // Append the svg object to the body of the page.
     const { svg, chart } = createSvg();
