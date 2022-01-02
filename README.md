@@ -8,14 +8,14 @@
 	<img src="res/icon.png" width="200" height="200">
 	<h1>Carbon Visualization</h1>
 	<p>
-    <b>Visualization of the co2 emitted during work travels by researchers.</b>
+    <b>Visualizations of the co2 emitted during work travels by researchers.</b>
 	</p>
 	<br>
 	<br>
 	<br>
 </div>
 
-A visualization of [work travels by members of a research lab](https://gricad-gitlab.univ-grenoble-alpes.fr/blanchr/2020-carbon) using the [D3.js library](https://d3js.org/).
+Some visualizations of [work travels by members of a research lab](https://gricad-gitlab.univ-grenoble-alpes.fr/blanchr/2020-carbon) using the [D3.js library](https://d3js.org/).
 
 ## Demonstration
 
