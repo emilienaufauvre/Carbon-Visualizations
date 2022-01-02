@@ -20,14 +20,20 @@
 <script src="../vendor/d3/d3.js"></script>
 <script src="../vendor/d3-simple-slider/d3-simple-slider.js"></script>
 <!-- Load our library. -->
+<script src="js/themes.js"></script>
+<script src="js/data.js"></script>
 <script src="js/stacked_graph.js"></script>
 <script src="js/bubble_map.js"></script>
 
 
-<!-- Containers. -->
-<div id="container" style="flex-direction: column;">
-    <div id="bubble_map" style="text-align: center;"></div>
-    <div id="stacked_graph" style="text-align: center;"></div>
+
+<!-- Page structure. -->
+<div id="container" style="display: flex; flex-direction: row;">
+    <div id="bubble_map" style="flex: 1;"></div>
+    <div id="container" style="display: flex; flex-direction: column;">
+        <div id="stacked_graph_1" style="flex: 1;"></div>
+        <div id="stacked_graph_2" style="flex: 1;"></div>
+    </div>
 </div>
 
 

@@ -1,207 +1,271 @@
-/**
- * Define the dimensions of the map.
- */
-const MarginB = { top: 200, right: 230, bottom: 50, left: 50 };
-const WidthB = 1200 - MarginB.left - MarginB.right;
-const HeightB = 1100 - MarginB.top - MarginB.bottom;
+let BubbleMap = (() => {
+    /**
+     * Define the public elements.
+     */
+    let self = {};
+
+    /**
+     * Define the dimensions of the map.
+     */
+    self.Margin = { top: 60, right: 50, bottom: 50, left: 50 };
+    self.Width = 900 - self.Margin.left - self.Margin.right;
+    self.Height = 900 - self.Margin.top - self.Margin.bottom;
 
 
+    const createSvg = (divName, projection) => {
+        const svg = d3.select(divName)
+            .append("svg")
+                .attr("width", self.Width + self.Margin.left + self.Margin.right)
+                .attr("height", self.Height + self.Margin.top + self.Margin.bottom)
+            .append("g")
+                .attr("transform",
+                    `translate(${self.Margin.left},
+                    ${self.Margin.top})`);
 
-const createSvgB = (projection) => {
-    // Check for the longitude + latitude 
-    // of where user clicks.
-    const onClick = (event, d) => {
-        const coord = projection.invert([
-            event.pageX - MarginB.left,
-            event.pageY - MarginB.top]);
-
-        console.log(coord[0] + " " + coord[1]);
-
-        // TODO
-        // TODO
-        // TODO
-        // TODO open stacked graph.
-        // TODO
-        // TODO
-        // TODO
+        return svg; 
     }
 
-    const svg = d3.select("#bubble_map")
-        .append("svg")
-            .attr("width", WidthB + MarginB.left + MarginB.right)
-            .attr("height", HeightB + MarginB.top + MarginB.bottom)
-            .on("mouseover", onClick) 
-        .append("g")
-            .attr("transform",
-                `translate(${MarginB.left},
-                ${MarginB.top})`);
-
-    return svg; 
-}
+    
+    const getProjection = () => {
+        return d3.geoMercator()
+            .center([0, 0])
+            .scale(120)
+            .translate([(self.Width + self.Margin.left + self.Margin.right) / 2, 
+                (self.Height + self.Margin.top + self.Margin.bottom) / 2]);
+    }
 
 
-const getProjection = () => {
-    return d3.geoMercator()
-        .center([0, 0])
-        .scale(120)
-        .translate([(WidthB + MarginB.left + MarginB.right) / 2, 
-            (HeightB + MarginB.top + MarginB.bottom) / 2]);
-}
+    const getBubbleColors = (data) => {
+        return d3.scaleOrdinal()
+            .domain([... new Set(data.map(d => d.continent))])
+            .range(d3.schemePaired);
+    }
 
 
-const getBubbleColors = (data) => {
-    return d3.scaleOrdinal()
-        .domain(data.map(d => d.continent))
-        .range(d3.schemePaired);
-}
+    const getBubbleSize = (data) => {
+        const valueExtent = d3.extent(data, d => +d.n)
+        return d3.scaleSqrt()
+            .domain(valueExtent)  
+            .range([2, 75]);  
+    }
 
 
-const getBubbleSize = (data) => {
-    const valueExtent = d3.extent(data, d => +d.n)
-    return d3.scaleSqrt()
-        .domain(valueExtent)  
-        .range([1, 50]);  
-}
+    const extractCoordinates = async (data, map) => {
+        let dataRefined = {};
+
+        map.features.forEach(c => {
+            let country = {};
+            let coord;
+            // Get the centroid of the country.
+            if (typeof c.geometry.coordinates[0][0][0] === "number") {
+                coord = c.geometry.coordinates[0].reduce(
+                    (a, b) => [a[0] + b[0], a[1] + b[1]]);
+                    coord[0] /= c.geometry.coordinates[0].length;
+                    coord[1] /= c.geometry.coordinates[0].length;
+            }
+            else {
+                coord = c.geometry.coordinates.at(-1)[0].reduce(
+                    (a, b) => [a[0] + b[0], a[1] + b[1]]);
+                    coord[0] /= c.geometry.coordinates.at(-1)[0].length;
+                    coord[1] /= c.geometry.coordinates.at(-1)[0].length;
+            }
+            // Fill it with properties.
+            country.name = c.properties.name;
+            country.continent = "";
+            country.lat = coord[1];
+            country.long = coord[0];
+            country.n = 0;
+            country.co2 = 0;
+            
+            dataRefined[country.name] = country;
+        });
+
+        let places = await Data.getPlacesData();
+        let countries = await Data.getCountriesData();
+
+        data.forEach(d => { 
+            let place = places.filter(p => p.placeId == d.placeId)
+            let country = countries.filter(c => c.alpha2 == place[0].alpha2);
+            let concerned = dataRefined[country[0].country];   
+
+            if (concerned) {
+                concerned.n++;
+                concerned.continent = country[0].continent;
+                concerned.alpha2 = country[0].alpha2;
+                concerned.co2 += d.co2;
+            }
+        });
+
+        return Object.values(dataRefined).filter(d => d.n > 0);
+    }
 
 
-const extractCoordinatesB = (data) => {
-    // TODO
-    // TODO
-    // TODO
-    // TODO extract data.
-    // TODO
-    // TODO
-    // TODO
-    return [
-            { long: 9.083, lat: 42.149, n: 1, continent: "EU"}, // corsica
-            { long: 7.26, lat: 43.71, n: 100, continent: "AM" }, // nice
-            { long: 2.349, lat: 48.864, n: 10, continent: "E"}, // Paris
-            { long: -1.397, lat: 43.664, n: 50, continent: "2" }, // Hossegor
-            { long: 3.075, lat: 50.640, n: 30, continent: "U" }, // Lille
-            { long: -3.83, lat: 58, n: 3, continent: "e" }, // Morlaix
-        ];
-}
+    const printMap = async (svg, projection) => {
+        let d;
+        // Load geojson world map.
+        await d3.json("../res/world.geojson").then(function (data) {
+            // Draw the map.
+            svg.append("g")
+                .selectAll("path")
+                .data(data.features)
+                .join("path")
+                    .attr("fill", "#b8b8b8")
+                    .attr("d", d3.geoPath()
+                        .projection(projection))
+                    .style("stroke", Themes.isDark() ? 
+                        "white" : "black")
+                    .style("opacity", .3);
+
+            d = data;
+        })
+
+        return d;
+    }
 
 
-const printMap = (svg, projection) => {
-    // Load geojson world map.
-    d3.json("../res/world.geojson").then(function (data) {
-        // Draw the map.
-        svg.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .join("path")
-                .attr("fill", "#b8b8b8")
-                .attr("d", d3.geoPath().projection(projection))
-                .style("stroke", Theme == Themes.DARK ? "white" : "black")
-                .style("opacity", .3);
-    })
-}
+    const printBubbles = (svg, data, size, colors) => {
+        const onClick = (event, d) => {
+            // Print info on this svg.
+            printCountrySelected(svg, d); 
+            // Clear the page (the previous stacked graphs).
+            d3.select("#stacked_graph_1").html("");
+            d3.select("#stacked_graph_2").html("");
+            // Print the stacked graphs. 
+            StackedGraph.printStackedGraph("#stacked_graph_1", 
+                d.alpha2, StackedGraph.Modes.DATE);
+            StackedGraph.printStackedGraph("#stacked_graph_2", 
+                d.alpha2, StackedGraph.Modes.DURATION);
+        };
+
+        svg.selectAll("myCircles")
+            .data(data.sort((a,b) => +b.n - +a.n))
+            .join("circle")
+                .attr("cx", d => projection([d.long, d.lat])[0])
+                .attr("cy", d => projection([d.long, d.lat])[1])
+                .attr("r", d => size(+d.n))
+                .style("fill", d => colors(d.continent))
+                .attr("stroke", d => colors(d.continent))
+                .attr("stroke-Width", 1)
+                .attr("fill-opacity", 0.4)
+            .on("click", onClick);
+    }
 
 
-const printBubbles = (svg, data, size, colors) => {
-    svg.selectAll("myCircles")
-        .data(data.sort((a,b) => +b.n - +a.n))
-        .join("circle")
-            .attr("cx", d => projection([d.long, d.lat])[0])
-            .attr("cy", d => projection([d.long, d.lat])[1])
-            .attr("r", d => size(+d.n))
-            .style("fill", d => colors(d.continent))
-            .attr("stroke", "#69b3a2")
-            .attr("stroke-WidthB", 1)
-            .attr("fill-opacity", .4);
-}
+    const printLegend = (svg, size) => {
+        const valuesToShow = [10, 500, 2500]
+        const xCircle = 40
+        const xLabel = 125
+        // The circles.
+        svg.selectAll("legend")
+            .data(valuesToShow)
+            .join("circle")
+                .attr("cx", xCircle)
+                .attr("cy", d => self.Height - size(d))
+                .attr("r", d => size(d))
+                .style("fill", "none")
+                .attr("stroke", Themes.isDark() ? 
+                    "#fff" : "#1b1e23")
+        // The segments.
+        svg.selectAll("legend")
+            .data(valuesToShow)
+            .join("line")
+                .attr('x1', d => xCircle + size(d))
+                .attr('x2', xLabel)
+                .attr('y1', d => self.Height - size(d))
+                .attr('y2', d => self.Height - size(d))
+                .attr("stroke", Themes.isDark() ?
+                    "#fff" : "#1b1e23")
+                .style('stroke-dasharray', ('2,2'))
+        // The labels.
+        svg.selectAll("legend")
+            .data(valuesToShow)
+            .join("text")
+                .attr('x', xLabel)
+                .attr('y', d => self.Height - size(d))
+                .text(d => d)
+                .style("font-size", 10)
+                .attr('alignment-baseline', 'middle')
+                .attr("stroke", Themes.isDark() ?
+                    "#fff" : "#1b1e23")
+    }
 
 
-const printLegendB = (svg, size) => {
-    // TODO
-    // TODO
-    // TODO
-    // TODO check the values To show.
-    // TODO
-    // TODO
-    // TODO
-    // TODO
-    const valuesToShow = [10, 50, 100]
-    const xCircle = 40
-    const xLabel = 90
-    // The circles.
-    svg.selectAll("legend")
-        .data(valuesToShow)
-        .join("circle")
-            .attr("cx", xCircle)
-            .attr("cy", d => HeightB - size(d))
-            .attr("r", d => size(d))
-            .style("fill", "none")
-            .attr("stroke", Theme == Themes.DARK ?
-                "#fff" : "#1b1e23")
-    // The segments.
-    svg.selectAll("legend")
-        .data(valuesToShow)
-        .join("line")
-            .attr('x1', d => xCircle + size(d))
-            .attr('x2', xLabel)
-            .attr('y1', d => HeightB - size(d))
-            .attr('y2', d => HeightB - size(d))
-            .attr("stroke", Theme == Themes.DARK ?
-                "#fff" : "#1b1e23")
-            .style('stroke-dasharray', ('2,2'))
-    // The labels.
-    svg.selectAll("legend")
-        .data(valuesToShow)
-        .join("text")
-            .attr('x', xLabel)
-            .attr('y', d => HeightB - size(d))
-            .text(d => d)
-            .style("font-size", 10)
-            .attr('alignment-baseline', 'middle')
-            .attr("stroke", Theme == Themes.DARK ?
-                "#fff" : "#1b1e23")
-}
+    const printTitle = (svg) => {
+        svg.append("text")
+            .style("fill", Themes.isDark() ? 
+                "lightsteelblue" : "steelblue")
+            .attr("text-anchor", "middle")
+            .attr("x", self.Width / 2 + self.Margin.left) 
+            .attr("y", 0) 
+            .attr("font-weight", "bold") 
+            .html("Number of missions per country")
+            .style("font-size", 34)
+    }
 
 
-const printTitle = (svg) => {
-    svg.append("text")
-        .style("fill", Theme == Themes.DARK ? 
-            "lightsteelblue" : "steelblue")
-        .attr("text-anchor", "middle")
-        .attr("x", WidthB / 2 + MarginB.left) 
-        .attr("y", 0) 
-        .html("Carbon emmisions by work travels for a research lab.")
-        .style("font-size", 24)
-}
+    const printCountrySelected = (svg, country) => {
+        const text = svg.select("text")
+            .style("fill", Themes.isDark() ? 
+                "lightsteelblue" : "steelblue")
+            .attr("text-anchor", "middle")
+            .style("font-size", 20);
+        // Clear.
+        text.html("");
+        // Write.
+        text.append("tspan")
+            .text("Country selected:")
+            .attr("x", self.Width / 2 + self.Margin.left) 
+            .attr("y", self.Height - 90) 
+        text.append("tspan")
+            .text(country.name)
+            .attr("x", self.Width / 2 + self.Margin.left) 
+            .attr("y", self.Height - 60);
+        text.append("tspan")
+            .text(country.n + " missions")
+            .attr("x", self.Width / 2 + self.Margin.left) 
+            .attr("y", self.Height - 30);
+        text.append("tspan")
+            .text((country.co2 / country.n).toFixed(2) 
+                + " average CO2 (per person per km)")
+            .attr("x", self.Width / 2 + self.Margin.left) 
+            .attr("y", self.Height - 0);
+    };
 
 
-const printBubbleMap = () => {
-    // Get the map projection for data.
-    projection = getProjection();
-    // Create the map container.
-    const svg = createSvgB(projection);
-    // Print the world map using a geojson.
-    printMap(svg, projection);
-    // Parse data and print bubbles. 
-    d3.tsv("../data/missions.tsv", d => (
-        {
-            missionId: d['#mission_id'],
-            userId: d.user_id,
-            placeId: +d.place_id,
-            date: d3.timeParse("%Y-%m-%d")(d.date),
-            duration: +d.duration,
-            modeTransport: d.mode,
-            co2: +d.co2,
-        }
-    )).then(async data => {
-        // Map the data to countries with global stats.
-        data = extractCoordinatesB(data);
-        // Get the color of the bubbles.
-        colors = getBubbleColors(data);
-        // Get the size transformation of the bubbles, in pixel.
-        size = getBubbleSize(data);
-        // Print the bubble for each data.
-        printBubbles(svg, data, size, colors);
-        // Print the bubble legend.
-        printLegendB(svg, size);
-        // Print the visualization title.
-        printTitle(svg);
-    })
-};
+    self.printBubbleMap = async (divName) => {
+        // Get the map projection for data.
+        projection = getProjection();
+        // Create the map container.
+        const svg = createSvg(divName, projection);
+        // Print the world map using a geojson.
+        let map = await printMap(svg, projection);
+        // Parse data and print bubbles. 
+        d3.tsv("../data/missions.tsv", d => (
+            {
+                missionId: d['#mission_id'],
+                userId: d.user_id,
+                placeId: +d.place_id,
+                date: d3.timeParse("%Y-%m-%d")(d.date),
+                duration: +d.duration,
+                modeTransport: d.mode,
+                co2: +d.co2,
+            }
+        )).then(async data => {
+            // Map the data to countries with global stats.
+            data = await extractCoordinates(data, map);
+            // Get the color of the bubbles.
+            colors = getBubbleColors(data);
+            // Get the size transformation of the bubbles, in pixel.
+            size = getBubbleSize(data);
+            // Print the bubble for each data.
+            printBubbles(svg, data, size, colors);
+            // Print the bubble legend.
+            printLegend(svg, size);
+            // Print the visualization title.
+            printTitle(svg);
+        })
+    };
+
+
+    return self;
+})();
