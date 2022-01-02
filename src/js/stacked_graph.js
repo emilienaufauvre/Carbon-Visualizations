@@ -1,10 +1,9 @@
 /**
- * Define the graph colors.
+ * Define the dimensions of the graph.
  */
-const Themes = Object.freeze({
-    LIGHT:   Symbol("light"),
-    DARK:  Symbol("dark"),
-});
+const MarginS = { top: 200, right: 230, bottom: 50, left: 50 };
+const WidthS = 1000 - MarginS.left - MarginS.right;
+const HeightS = 800 - MarginS.top - MarginS.bottom;
 
 /**
  * Define the x values of the graph.
@@ -14,40 +13,21 @@ const Modes = Object.freeze({
     DATE:  Symbol("date"),
 });
 
-/**
- * Define the dimensions of the graph.
- */
-const Margin = { top: 60, right: 230, bottom: 50, left: 50 };
-const Width = 1000 - Margin.left - Margin.right;
-const Height = 400 - Margin.top - Margin.bottom;
-
-/**
- * Set the theme.
- */
-const Theme = Themes.DARK;
 
 
-
-const setBackground = () => {
-    d3.select("body")
-        .style("background", Theme == Themes.DARK ? 
-            "#1b1e23" : "none")
-}
-
-
-const createSvg = () => {
+const createSvgS = () => {
     const svg = d3.select("#stacked_graph")
         .append("svg")
-            .attr("width", Width + Margin.left 
-                + Margin.right)
-            .attr("height", Height + Margin.top 
-                + Margin.bottom)
+            .attr("width", WidthS + MarginS.left 
+                + MarginS.right)
+            .attr("height", HeightS + MarginS.top 
+                + MarginS.bottom)
             .style("color", Theme == Themes.DARK ? 
                 "#fff" : "#1b1e23")
         .append("g")
             .attr("transform",
-                `translate(${Margin.left},
-                ${Margin.top})`)
+                `translate(${MarginS.left},
+                ${MarginS.top})`)
             .attr("fill", Theme == Themes.DARK ? 
                 "lightsteelblue" : "steelblue");
     const chart = svg.append("g")
@@ -104,7 +84,7 @@ const defineKeys = data => {
 }; 
 
 
-const extractCoordinates = (data, mode, keys) => {
+const extractCoordinatesS = (data, mode, keys) => {
     // We sort the data using the mode as the comparator.
     data.sort((d1, d2) => 
         d1[mode.description] - d2[mode.description]);
@@ -169,18 +149,18 @@ const getScales = (data, mode, yCoord) => {
         x = d3.scaleLinear()
             .domain(d3.extent(data, d => 
                 d[mode.description]))
-            .range([0, Width]);
+            .range([0, WidthS]);
     } 
     else if (mode == Modes.DATE) {
         x = d3.scaleTime()
             .domain(d3.extent(data, d => 
                 new Date(d[mode.description])))
-            .range([0, Width]);
+            .range([0, WidthS]);
     }
 
     const y = d3.scaleLinear()
         .domain([0, yMax])
-        .range([Height, 0])
+        .range([HeightS, 0])
         .nice();
 
     return { x: x, y: y };
@@ -207,7 +187,7 @@ const printAreas = (mode, keys, colors, x, y, yCoord, chart) => {
 
 const printAxes = (mode, x, y, svg) => {
     const xAxis = svg.append("g")
-        .attr("transform", `translate(0, ${Height + 2})`)
+        .attr("transform", `translate(0, ${HeightS + 2})`)
         .call(d3.axisBottom(x).ticks().tickSize(6));
     const yAxis = svg.append("g")
         .attr("transform", `translate(${0}, 0)`)
@@ -224,8 +204,8 @@ const printAxes = (mode, x, y, svg) => {
 
     svg.append("text")
         .attr("text-anchor", "end")
-        .attr("x", Width)
-        .attr("y", Height + 40)
+        .attr("x", WidthS)
+        .attr("y", HeightS + 40)
         .text(xLegend);
     svg.append("text")
         .attr("text-anchor", "end")
@@ -238,7 +218,7 @@ const printAxes = (mode, x, y, svg) => {
 };
 
 
-const printLegend = (mode, keys, colors, svg) => {
+const printLegendS = (mode, keys, colors, svg) => {
     // Add user interaction:
     // Handler when an area is selected (atStart).
     const highlight = (event, d) => {
@@ -287,7 +267,7 @@ const printLegend = (mode, keys, colors, svg) => {
 };
 
 
-const addSlider = (data, mode, keys, colors, x, y, chart) => {
+const addSlider = (data, mode, keys, colors, x, y, svg, chart) => {
     const updateChart = val => {
 
         if (mode == Modes.DURATION) {
@@ -298,7 +278,7 @@ const addSlider = (data, mode, keys, colors, x, y, chart) => {
         }
 
         // Compute changes.
-        const yCoord = extractCoordinates(data_, mode, keys);
+        const yCoord = extractCoordinatesS(data_, mode, keys);
         const areas = d3.area()
             .x(d => x(d.data.public[mode.description]))
             .y0(d => y(d[0]))
@@ -317,10 +297,10 @@ const addSlider = (data, mode, keys, colors, x, y, chart) => {
 
     if (mode == Modes.DURATION) {
         const extent = d3.extent(data, d => new Date(d.date));
-        slider = d3.sliderBottom()
+        slider = d3.sliderLeft()
             .min(extent[0])
             .max(extent[1])
-            .width(Width / 2)
+            .height(HeightS / 3)
             .step(1000 * 60 * 60 * 24 * 365)
             .tickFormat(d3.timeFormat('%Y'))
             .ticks(4)
@@ -329,26 +309,24 @@ const addSlider = (data, mode, keys, colors, x, y, chart) => {
     }
     else if (mode == Modes.DATE) {
         const extent = d3.extent(data, d => d.duration);
-        slider = d3.sliderBottom()
+        slider = d3.sliderLeft()
             .min(extent[0])
             .max(extent[1])
-            .width(Width / 2)
+            .height(HeightS / 3)
             .tickFormat(d3.format('.5'))
             .ticks(4)
             .default(extent[1])
             .on('onchange', updateChart);
     }
 
-    let g = d3.select("#stacked_graph")
-            .append("svg")
-                .attr("width", Width)
-                .attr("height", 100)
+    let g = svg.append("svg")
+                .attr("width", WidthS + 200)
+                .attr("height", HeightS)
                 .style("color", Theme == Themes.DARK ? 
                     "#fff" : "#1b1e23")
             .append("g")
                 .attr("transform", `translate(
-                    ${(Width + Margin.left + Margin.right) / 2
-                    - ((Width / 2) / 2)}, 30)`)
+                    ${WidthS + 90}, ${HeightS / 2})`)
                 .attr("fill", Theme == Themes.DARK ? 
                     "lightsteelblue" : "steelblue");
 
@@ -395,13 +373,13 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
         .append("svg:clipPath")
             .attr("id", "clip")
         .append("svg:rect")
-            .attr("width", Width)
-            .attr("height", Height)
+            .attr("width", WidthS)
+            .attr("height", HeightS)
             .attr("x", 0)
             .attr("y", 0);
 
     const brush = d3.brushX()
-        .extent([[0, 0], [Width, Height]])
+        .extent([[0, 0], [WidthS, HeightS]])
         .on("end", updateChart);
     
     chart.append("g")
@@ -420,10 +398,8 @@ const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
  * @param {} mode define the x values.
  */
 const printStackedGraph = (alpha2, mode) => {
-    // Set body bg depending on theme.
-    setBackground();
     // Append the svg object to the body of the page.
-    const { svg, chart } = createSvg();
+    const { svg, chart } = createSvgS();
 
     // Parse data and create graph.
     d3.tsv("../data/missions.tsv", d => (
@@ -445,20 +421,15 @@ const printStackedGraph = (alpha2, mode) => {
         const { keys, colors } = defineKeys(data);
         // For each x value and each key, get the y value 
         // corresponding.
-        const yCoord = extractCoordinates(data, mode, keys);
+        const yCoord = extractCoordinatesS(data, mode, keys);
         // Get the chart scales.
         const { x, y } = getScales(data, mode, yCoord);
         // Print the graph. 
         const areas = printAreas(mode, keys, colors, x, y, yCoord, chart);
         const { xAxis, yAxis } = printAxes(mode, x, y, svg);
-        printLegend(mode, keys, colors, svg);
+        printLegendS(mode, keys, colors, svg);
         // Add user interaction.
         addBrushing(data, mode, x, areas, svg, chart, xAxis);
-        addSlider(data, mode, keys, colors, x, y, chart);
+        addSlider(data, mode, keys, colors, x, y, svg, chart);
     })
 }
-
-
-
-
-printStackedGraph("FR", Modes.DATE);

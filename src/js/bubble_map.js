@@ -1,38 +1,19 @@
 /**
- * Define the graph colors.
- */
-const Themes = Object.freeze({
-    LIGHT:   Symbol("light"),
-    DARK:  Symbol("dark"),
-});
-
-/**
  * Define the dimensions of the map.
  */
-const Margin = { top: 60, right: 230, bottom: 50, left: 50 };
-const Width = 1000 - Margin.left - Margin.right;
-const Height = 750 - Margin.top - Margin.bottom;
-
-/**
- * Set the theme.
- */
-const Theme = Themes.DARK;
+const MarginB = { top: 200, right: 230, bottom: 50, left: 50 };
+const WidthB = 1200 - MarginB.left - MarginB.right;
+const HeightB = 1100 - MarginB.top - MarginB.bottom;
 
 
 
-const setBackground = () => {
-    d3.select("body")
-        .style("background", Theme == Themes.DARK ? "#1b1e23" : "none")
-}
-
-
-const createSvg = (projection) => {
+const createSvgB = (projection) => {
     // Check for the longitude + latitude 
     // of where user clicks.
     const onClick = (event, d) => {
         const coord = projection.invert([
-            event.pageX - Margin.left,
-            event.pageY - Margin.top]);
+            event.pageX - MarginB.left,
+            event.pageY - MarginB.top]);
 
         console.log(coord[0] + " " + coord[1]);
 
@@ -47,13 +28,13 @@ const createSvg = (projection) => {
 
     const svg = d3.select("#bubble_map")
         .append("svg")
-            .attr("width", Width + Margin.left + Margin.right)
-            .attr("height", Height + Margin.top + Margin.bottom)
+            .attr("width", WidthB + MarginB.left + MarginB.right)
+            .attr("height", HeightB + MarginB.top + MarginB.bottom)
             .on("mouseover", onClick) 
         .append("g")
             .attr("transform",
-                `translate(${Margin.left},
-                ${Margin.top})`);
+                `translate(${MarginB.left},
+                ${MarginB.top})`);
 
     return svg; 
 }
@@ -63,8 +44,8 @@ const getProjection = () => {
     return d3.geoMercator()
         .center([0, 0])
         .scale(120)
-        .translate([(Width + Margin.left + Margin.right) / 2, 
-            (Height + Margin.top + Margin.bottom) / 2]);
+        .translate([(WidthB + MarginB.left + MarginB.right) / 2, 
+            (HeightB + MarginB.top + MarginB.bottom) / 2]);
 }
 
 
@@ -83,7 +64,7 @@ const getBubbleSize = (data) => {
 }
 
 
-const extractCoordinates = (data) => {
+const extractCoordinatesB = (data) => {
     // TODO
     // TODO
     // TODO
@@ -127,12 +108,12 @@ const printBubbles = (svg, data, size, colors) => {
             .attr("r", d => size(+d.n))
             .style("fill", d => colors(d.continent))
             .attr("stroke", "#69b3a2")
-            .attr("stroke-width", 1)
+            .attr("stroke-WidthB", 1)
             .attr("fill-opacity", .4);
 }
 
 
-const printLegend = (svg, size) => {
+const printLegendB = (svg, size) => {
     // TODO
     // TODO
     // TODO
@@ -149,7 +130,7 @@ const printLegend = (svg, size) => {
         .data(valuesToShow)
         .join("circle")
             .attr("cx", xCircle)
-            .attr("cy", d => Height - size(d))
+            .attr("cy", d => HeightB - size(d))
             .attr("r", d => size(d))
             .style("fill", "none")
             .attr("stroke", Theme == Themes.DARK ?
@@ -160,8 +141,8 @@ const printLegend = (svg, size) => {
         .join("line")
             .attr('x1', d => xCircle + size(d))
             .attr('x2', xLabel)
-            .attr('y1', d => Height - size(d))
-            .attr('y2', d => Height - size(d))
+            .attr('y1', d => HeightB - size(d))
+            .attr('y2', d => HeightB - size(d))
             .attr("stroke", Theme == Themes.DARK ?
                 "#fff" : "#1b1e23")
             .style('stroke-dasharray', ('2,2'))
@@ -170,7 +151,7 @@ const printLegend = (svg, size) => {
         .data(valuesToShow)
         .join("text")
             .attr('x', xLabel)
-            .attr('y', d => Height - size(d))
+            .attr('y', d => HeightB - size(d))
             .text(d => d)
             .style("font-size", 10)
             .attr('alignment-baseline', 'middle')
@@ -181,10 +162,10 @@ const printLegend = (svg, size) => {
 
 const printTitle = (svg) => {
     svg.append("text")
-        .attr("text-anchor", "start")
         .style("fill", Theme == Themes.DARK ? 
             "lightsteelblue" : "steelblue")
-        .attr("x", 0) 
+        .attr("text-anchor", "middle")
+        .attr("x", WidthB / 2 + MarginB.left) 
         .attr("y", 0) 
         .html("Carbon emmisions by work travels for a research lab.")
         .style("font-size", 24)
@@ -192,12 +173,10 @@ const printTitle = (svg) => {
 
 
 const printBubbleMap = () => {
-    // Set body bg depending on theme.
-    setBackground();
     // Get the map projection for data.
     projection = getProjection();
     // Create the map container.
-    const svg = createSvg(projection);
+    const svg = createSvgB(projection);
     // Print the world map using a geojson.
     printMap(svg, projection);
     // Parse data and print bubbles. 
@@ -213,7 +192,7 @@ const printBubbleMap = () => {
         }
     )).then(async data => {
         // Map the data to countries with global stats.
-        data = extractCoordinates(data);
+        data = extractCoordinatesB(data);
         // Get the color of the bubbles.
         colors = getBubbleColors(data);
         // Get the size transformation of the bubbles, in pixel.
@@ -221,12 +200,8 @@ const printBubbleMap = () => {
         // Print the bubble for each data.
         printBubbles(svg, data, size, colors);
         // Print the bubble legend.
-        printLegend(svg, size);
+        printLegendB(svg, size);
         // Print the visualization title.
         printTitle(svg);
     })
 };
-
-
-
-printBubbleMap();

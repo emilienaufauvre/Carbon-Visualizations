@@ -19,12 +19,17 @@
 <!-- Load dependencies. -->
 <script src="../vendor/d3/d3.js"></script>
 <script src="../vendor/d3-simple-slider/d3-simple-slider.js"></script>
+<!-- Load our library. -->
+<script src="js/stacked_graph.js"></script>
+<script src="js/bubble_map.js"></script>
 
 
 <!-- Containers. -->
-<div id="bubble_map"></div>
-<div id="stacked_graph"></div>
+<div id="container" style="flex-direction: column;">
+    <div id="bubble_map" style="text-align: center;"></div>
+    <div id="stacked_graph" style="text-align: center;"></div>
+</div>
 
 
 <!-- Include the visualization. -->
-<script src="js/bubble_map.js"></script>
+<script src="js/main.js"></script>
