@@ -1,4 +1,4 @@
-# Carbon-Visualization
+# Carbon Visualizations
 
 [![Generic badge](https://img.shields.io/badge/license-Unlicense-green.svg)](https://shields.io/)
 
