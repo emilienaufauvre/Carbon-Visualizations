@@ -3,6 +3,8 @@ let BubbleMap = (() => {
      * Define the public elements.
      */
     let self = {};
+    let mode = StackedGraph.Modes.DURATION;
+    let country;
 
     /**
      * Define the dimensions of the map.
@@ -11,6 +13,17 @@ let BubbleMap = (() => {
     self.Width = 900 - self.Margin.left - self.Margin.right;
     self.Height = 900 - self.Margin.top - self.Margin.bottom;
 
+    self.changeMode = (checked) => 
+    {
+        if(checked == true)
+        {
+            mode = StackedGraph.Modes.DATE
+        }
+        else
+        {
+            mode = StackedGraph.Modes.DURATION
+        }
+    }
 
     const createSvg = (divName, projection) => {
         const svg = d3.select(divName)
@@ -162,10 +175,9 @@ let BubbleMap = (() => {
             d3.select("#stacked_graph_1").html("");
             d3.select("#stacked_graph_2").html("");
             // Print the stacked graphs. 
+            country = d.alpha2;
             StackedGraph.printStackedGraph("#stacked_graph_1", 
-                d.alpha2, StackedGraph.Modes.DATE);
-            StackedGraph.printStackedGraph("#stacked_graph_2", 
-                d.alpha2, StackedGraph.Modes.DURATION);
+                country, mode);
         };
 
         svg.selectAll("myCircles")
