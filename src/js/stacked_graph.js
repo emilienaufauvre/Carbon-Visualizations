@@ -7,8 +7,8 @@ let StackedGraph = (() => {
     /**
      * Define the dimensions of the graph.
      */
-    self.Margin = { top: 100, right: 230, bottom: 50, left: 50 };
-    self.Width = 800 - self.Margin.left - self.Margin.right;
+    self.Margin = { top: 100, right: 140, bottom: 50, left: 50 };
+    self.Width = 700 - self.Margin.left - self.Margin.right;
     self.Height = 450 - self.Margin.top - self.Margin.bottom;
 
     /**
@@ -217,19 +217,19 @@ let StackedGraph = (() => {
     };
 
 
-    const printLegend = (keys, colors, svg) => {
+    const printLegend = (keys, colors, svg, divName) => {
         // Add user interaction:
         // Handler when an area is selected (atStart).
         const highlight = (event, d) => {
             // Reduce opacity of all groups.
-            d3.selectAll(".myArea").style("opacity", .1)
+            d3.select(divName).selectAll(".myArea").style("opacity", .1)
             // Expect the one that is hovered.
-            d3.select("." + d).style("opacity", 1)
+            d3.select(divName).select("." + d).style("opacity", 1)
         }
 
         // Handler at the end of the selection (atEnd).
         const noHighlight = (event, d) => {
-            d3.selectAll(".myArea").style("opacity", 1)
+            d3.select(divName).selectAll(".myArea").style("opacity", 1)
         }
 
         // Add one dot in the legend for each key/area. 
@@ -427,12 +427,12 @@ let StackedGraph = (() => {
                 co2: +d.co2,
             }
         )).then(async data => {
-            // We select only the data corresponding to the
-            // given country.
-            data = await filterCountry(alpha2, data);
             // Extract keys from dataset, a key being a mode
             // of transport.
             const { keys, colors } = defineKeys(data);
+            // We select only the data corresponding to the
+            // given country.
+            data = await filterCountry(alpha2, data);
             // For each x value and each key, get the y value 
             // corresponding.
             const yCoord = extractCoordinates(data, mode, keys);
@@ -441,7 +441,7 @@ let StackedGraph = (() => {
             // Print the graph. 
             const areas = printAreas(mode, keys, colors, x, y, yCoord, chart);
             const { xAxis, yAxis } = printAxes(mode, x, y, svg);
-            printLegend(keys, colors, svg);
+            printLegend(keys, colors, svg, divName);
             // Add user interaction.
             addBrushing(data, mode, x, areas, svg, chart, xAxis);
             addSlider(data, mode, keys, colors, x, y, svg, chart);

@@ -36,9 +36,13 @@ let BubbleMap = (() => {
 
 
     const getBubbleColors = (data) => {
-        return d3.scaleOrdinal()
-            .domain([... new Set(data.map(d => d.continent))])
-            .range(d3.schemePaired);
+        const modesTransports = d3.map(data, d => d.modeTransport);
+        // Eliminate duplicates.
+        const keys = [... new Set(modesTransports)];
+        // Associate a color with each key. 
+        return colors = d3.scaleOrdinal()
+            .domain(keys)
+            .range(d3.schemeCategory10);
     }
 
 
@@ -53,6 +57,7 @@ let BubbleMap = (() => {
     const extractCoordinates = async (data, map) => {
         let dataRefined = {};
 
+        // Extract each country.
         map.features.forEach(c => {
             let country = {};
             let coord;
@@ -76,6 +81,12 @@ let BubbleMap = (() => {
             country.long = coord[0];
             country.n = 0;
             country.co2 = 0;
+            country.transports = {};
+            country.transports.car = 0;
+            country.transports.other = 0;
+            country.transports.train = 0;
+            country.transports.plane = 0;
+            country.transports.public = 0;
             
             dataRefined[country.name] = country;
         });
@@ -83,6 +94,7 @@ let BubbleMap = (() => {
         let places = await Data.getPlacesData();
         let countries = await Data.getCountriesData();
 
+        // Fill data of each country.
         data.forEach(d => { 
             let place = places.filter(p => p.placeId == d.placeId)
             let country = countries.filter(c => c.alpha2 == place[0].alpha2);
@@ -93,9 +105,28 @@ let BubbleMap = (() => {
                 concerned.continent = country[0].continent;
                 concerned.alpha2 = country[0].alpha2;
                 concerned.co2 += d.co2;
+                concerned.transports[d.modeTransport] ++;
             }
         });
 
+        // Extract main transport.
+        for (var country in dataRefined) {
+            let max = 0;
+            let mainTransport = "other";
+
+            for (var transport in dataRefined[country].transports) {
+                let val = dataRefined[country].transports[transport];
+
+                if (max < val) {
+                    max = val;
+                    mainTransport = transport;
+                }
+            }
+
+            dataRefined[country].mainTransport = mainTransport;
+        }
+
+        console.log(dataRefined);
         return Object.values(dataRefined).filter(d => d.n > 0);
     }
 
@@ -143,8 +174,8 @@ let BubbleMap = (() => {
                 .attr("cx", d => projection([d.long, d.lat])[0])
                 .attr("cy", d => projection([d.long, d.lat])[1])
                 .attr("r", d => size(+d.n))
-                .style("fill", d => colors(d.continent))
-                .attr("stroke", d => colors(d.continent))
+                .style("fill", d => colors(d.mainTransport))
+                .attr("stroke", d => colors(d.mainTransport))
                 .attr("stroke-Width", 1)
                 .attr("fill-opacity", 0.4)
             .on("click", onClick);
@@ -152,9 +183,9 @@ let BubbleMap = (() => {
 
 
     const printLegend = (svg, size) => {
-        const valuesToShow = [10, 500, 2500]
-        const xCircle = 40
-        const xLabel = 125
+        const valuesToShow = [10, 500, 2500];
+        const xCircle = 140;
+        const xLabel = 220;
         // The circles.
         svg.selectAll("legend")
             .data(valuesToShow)
@@ -207,28 +238,34 @@ let BubbleMap = (() => {
         const text = svg.select("text")
             .style("fill", Themes.isDark() ? 
                 "lightsteelblue" : "steelblue")
-            .attr("text-anchor", "middle")
+            .attr("text-anchor", "end")
             .style("font-size", 20);
         // Clear.
         text.html("");
         // Write.
         text.append("tspan")
-            .text("Country selected:")
-            .attr("x", self.Width / 2 + self.Margin.left) 
-            .attr("y", self.Height - 90) 
-        text.append("tspan")
             .text(country.name)
-            .attr("x", self.Width / 2 + self.Margin.left) 
-            .attr("y", self.Height - 60);
+            .attr("x", self.Width + self.Margin.left) 
+            .attr("y", self.Height - 90);
         text.append("tspan")
             .text(country.n + " missions")
-            .attr("x", self.Width / 2 + self.Margin.left) 
-            .attr("y", self.Height - 30);
+            .attr("x", self.Width + self.Margin.left) 
+            .attr("y", self.Height - 50);
         text.append("tspan")
             .text((country.co2 / country.n).toFixed(2) 
                 + " average CO2 (per person per km)")
-            .attr("x", self.Width / 2 + self.Margin.left) 
-            .attr("y", self.Height - 0);
+            .attr("x", self.Width + self.Margin.left) 
+            .attr("y", self.Height - 10);
+    };
+
+
+    const printDefault = (svg) => {
+        d3.select("#stacked_graph_1")
+            .append("p")
+                .html("👋<br><br>Please click<br>on a country (circle)<br>to print stats.")
+                    .style("color", Themes.isDark() ?
+                        "lightsteelblue" : "steelblue")
+                    .style("font-size", "25px");
     };
 
 
@@ -237,6 +274,8 @@ let BubbleMap = (() => {
         projection = getProjection();
         // Create the map container.
         const svg = createSvg(divName, projection);
+        // Print the default sentence.
+        printDefault(svg);
         // Print the world map using a geojson.
         let map = await printMap(svg, projection);
         // Parse data and print bubbles. 
@@ -251,10 +290,10 @@ let BubbleMap = (() => {
                 co2: +d.co2,
             }
         )).then(async data => {
-            // Map the data to countries with global stats.
-            data = await extractCoordinates(data, map);
             // Get the color of the bubbles.
             colors = getBubbleColors(data);
+            // Map the data to countries with global stats.
+            data = await extractCoordinates(data, map);
             // Get the size transformation of the bubbles, in pixel.
             size = getBubbleSize(data);
             // Print the bubble for each data.

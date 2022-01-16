@@ -10,6 +10,8 @@
         * {
             margin: 0;
             padding: 0;
+            justify-content: center;
+            align-items: center;
             font-family: "Lucida Console", "Courier New", monospace;
         }
     </style>
@@ -28,11 +30,11 @@
 
 
 <!-- Page structure. -->
-<div id="container" style="display: flex; flex-direction: row;">
+<div id="container" style="flex:1; display: flex; flex-direction: row;"> 
     <div id="bubble_map" style="flex: 1;"></div>
-    <div id="container" style="display: flex; flex-direction: column;">
-        <div id="stacked_graph_1" style="flex: 1;"></div>
-        <div id="stacked_graph_2" style="flex: 1;"></div>
+    <div id="container" style="flex: 1; display: flex; flex-direction: column;">
+        <div id="stacked_graph_1" style="flex: 1;"></div> 
+        <div id="stacked_graph_2" style="flex: 1;"></div> 
     </div>
 </div>
 
