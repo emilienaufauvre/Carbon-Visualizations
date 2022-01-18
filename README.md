@@ -42,6 +42,6 @@ Go to the address where your server is serving ([local host on port 8000](http:/
 
 - The colors can be changed with the module `Themes` by changing the value of `Themes.theme`.
 
-# Attributions
+## Attributions
 
 * Icon made by [Dimi Kazak](https://www.flaticon.com/authors/dimi-kazak) from [Flaticon](https://www.flaticon.com/).
