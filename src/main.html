@@ -5,110 +5,81 @@
 
 <head>
     <style>
-        html,
-        body,
-        * {
+        #root, 
+        #container, 
+        #stacked_graph {
             margin: 0;
             padding: 0;
             justify-content: center;
             align-items: center;
             font-family: "Lucida Console", "Courier New", monospace;
+            transition: 5s;
+        }
+        
+        .button-box {
+            width: 300px;
+            margin: 35px auto;
+            position: relative;
+            border-radius: 30px;
+            background: #BBB6;
+        }
+
+        .toggle-btn {
+            padding: 10px 40px;
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+            outline: none;
+            position: relative;
+            text-align: center;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+
+        #btn {
+            left: 0;
+            top: 0;
+            position: absolute;
+            width: 150px;
+            height: 100%;
+            background: #e67e22;
+            border-radius: 30px;
+            transition: .5s;
         }
     </style>
 </head>
+
+<script>
+</script>
+
+
+<body>
+    <!-- Page structure. -->
+    <div id="root" style="flex:1; display: flex; flex-direction: row;">
+        <div id="bubble_map" style="flex: 1;"></div>
+        <div id="container" style="flex: 1; display: flex; flex-direction: column;">
+            <div id="switch" class="form-box">
+                <div class="button-box">
+                    <div id="btn" style="left: 0px;"></div>
+                    <button type="button" class="toggle-btn" onclick="leftClick()">Date</button>
+                    <button type="button" class="toggle-btn" onclick="rightClick()">Duration</button>
+                </div>
+            </div>
+            <div id="stacked_graph" style="flex: 1;"></div>
+        </div>
+    </div>
+</body>
+
 
 
 <!-- Load dependencies. -->
 <script src="../vendor/d3/d3.js"></script>
 <script src="../vendor/d3-simple-slider/d3-simple-slider.js"></script>
-<!-- Load our library. -->
+
+<!-- Load our library modules. -->
 <script src="js/themes.js"></script>
 <script src="js/data.js"></script>
 <script src="js/stacked_graph.js"></script>
 <script src="js/bubble_map.js"></script>
-
-
-
-<!-- Page structure. -->
-<div id="container" style="flex:1; display: flex; flex-direction: row;"> 
-    <div id="bubble_map" style="flex: 1;"></div>
-    <div id="container" style="flex: 1; display: flex; flex-direction: column;">
-        <div id="stacked_graph_1" style="flex: 1;"></div> 
-        <div id="stacked_graph_2" style="flex: 1;"></div> 
-    </div>
-</div>
-
-<!-- Switch button for Duration / Date mode-->
-<div>
-    <text style="color:rgb(255,255,255);">Duration</text>
-    <label class="switch">
-        <input type="checkbox" id="switch" onclick = "changeMode()">
-        <span class="slider round"></span>
-        <style>/* The switch - the box around the slider */
-            .switch {
-              position: relative;
-              display: inline-block;
-              width: 60px;
-              height: 34px;
-            }
-            
-            /* Hide default HTML checkbox */
-            .switch input {
-              opacity: 0;
-              width: 0;
-              height: 0;
-            }
-            
-            /* The slider */
-            .slider {
-              position: absolute;
-              cursor: pointer;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background-color: #ccc;
-              -webkit-transition: .4s;
-              transition: .4s;
-            }
-            
-            .slider:before {
-              position: absolute;
-              content: "";
-              height: 26px;
-              width: 26px;
-              left: 4px;
-              bottom: 4px;
-              background-color: white;
-              -webkit-transition: .4s;
-              transition: .4s;
-            }
-            
-            input:checked + .slider {
-              background-color: #2196F3;
-            }
-            
-            input:focus + .slider {
-              box-shadow: 0 0 1px #2196F3;
-            }
-            
-            input:checked + .slider:before {
-              -webkit-transform: translateX(26px);
-              -ms-transform: translateX(26px);
-              transform: translateX(26px);
-            }
-            
-            /* Rounded sliders */
-            .slider.round {
-              border-radius: 34px;
-            }
-            
-            .slider.round:before {
-              border-radius: 50%;
-            }</style>
-    </label>
-    <text style="color:rgb(255,255,255);">Date</text>
-</div>
 
 
 <!-- Include the visualization. -->

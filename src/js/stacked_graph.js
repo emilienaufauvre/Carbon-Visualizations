@@ -19,9 +19,11 @@ let StackedGraph = (() => {
         DATE:  Symbol("date"),
     });
 
+    self.Svg = null;
+
 
     const createSvg = (divName) => {
-        const svg = d3.select(divName)
+        self.Svg = d3.select(divName)
             .append("svg")
                 .attr("width", self.Width + self.Margin.left 
                     + self.Margin.right)
@@ -35,10 +37,10 @@ let StackedGraph = (() => {
                     ${self.Margin.top})`)
                 .attr("fill", Themes.isDark() ?
                     "lightsteelblue" : "steelblue");
-        const chart = svg.append("g")
+        const chart = self.Svg.append("g")
             .attr("clip-path", "url(#clip)");
 
-        return { svg: svg, chart: chart };
+        return chart;
     }
 
 
@@ -180,11 +182,11 @@ let StackedGraph = (() => {
     };
 
 
-    const printAxes = (mode, x, y, svg) => {
-        const xAxis = svg.append("g")
+    const printAxes = (mode, x, y) => {
+        const xAxis = self.Svg.append("g")
             .attr("transform", `translate(0, ${self.Height + 2})`)
             .call(d3.axisBottom(x).ticks().tickSize(6));
-        const yAxis = svg.append("g")
+        const yAxis = self.Svg.append("g")
             .attr("transform", `translate(${0}, 0)`)
             .call(d3.axisLeft(y).ticks().tickSize(6));
 
@@ -197,14 +199,14 @@ let StackedGraph = (() => {
             xLegend = "Date"
         }
 
-        svg.append("text")
+        self.Svg.append("text")
             .attr("text-anchor", "end")
             .attr("x", self.Width)
             .attr("y", self.Height + 40)
             .attr("font-weight", "bold") 
             .style("font-size", 20)
             .text(xLegend);
-        svg.append("text")
+        self.Svg.append("text")
             .attr("text-anchor", "end")
             .attr("x", 0)
             .attr("y", -20)
@@ -217,7 +219,7 @@ let StackedGraph = (() => {
     };
 
 
-    const printLegend = (keys, colors, svg, divName) => {
+    const printLegend = (keys, colors, divName) => {
         // Add user interaction:
         // Handler when an area is selected (atStart).
         const highlight = (event, d) => {
@@ -238,7 +240,7 @@ let StackedGraph = (() => {
         const xStart = self.Width + 40;
         const yStart = 0;
 
-        svg.selectAll("myrect")
+        self.Svg.selectAll("myrect")
             .data(keys)
             .join("rect")
                 .attr("x", xStart)
@@ -250,7 +252,7 @@ let StackedGraph = (() => {
                 .on("mouseover", highlight)
                 .on("mouseleave", noHighlight)
 
-        svg.selectAll("mylabels")
+        self.Svg.selectAll("mylabels")
             .data(keys)
             .join("text")
                 .attr("x", xStart + dotSize * 1.2)
@@ -267,7 +269,7 @@ let StackedGraph = (() => {
     };
 
 
-    const addSlider = (data, mode, keys, colors, x, y, svg, chart) => {
+    const addSlider = (data, mode, keys, colors, x, y, chart) => {
         const updateChart = val => {
 
             if (mode == self.Modes.DURATION) {
@@ -322,7 +324,7 @@ let StackedGraph = (() => {
             text = self.Modes.DURATION.description;
         }
 
-        svg.append("text")
+        self.Svg.append("text")
             .attr("x", (1.75 * self.Height / 3) 
                 + (self.Height / 3 / 2))
             .attr("y", -(self.Width + 90) - 15) 
@@ -332,7 +334,7 @@ let StackedGraph = (() => {
                 "lightsteelblue" : "steelblue")
             .style("font-size", 15)
             .html(text);
-        let g = svg.append("svg")
+        let g = self.Svg.append("svg")
                     .attr("width", self.Width + 200)
                     .attr("height", self.Height)
                     .style("color", Themes.isDark() ? 
@@ -347,7 +349,7 @@ let StackedGraph = (() => {
     }
 
 
-    const addBrushing = (data, mode, x, areas, svg, chart, xAxis) => {
+    const addBrushing = (data, mode, x, areas, chart, xAxis) => {
         let idleTimeout;
 
         const idled = () => { 
@@ -382,7 +384,7 @@ let StackedGraph = (() => {
         };
 
         // Add a clipPath: everything out of this area won't be drawn.
-        const clip = svg.append("defs")
+        const clip = self.Svg.append("defs")
             .append("svg:clipPath")
                 .attr("id", "clip")
             .append("svg:rect")
@@ -413,7 +415,7 @@ let StackedGraph = (() => {
      */
     self.printStackedGraph = (divName, alpha2, mode) => {
         // Append the svg object to the body of the page.
-        const { svg, chart } = createSvg(divName);
+        const chart = createSvg(divName);
 
         // Parse data and create graph.
         d3.tsv("../data/missions.tsv", d => (
@@ -440,11 +442,11 @@ let StackedGraph = (() => {
             const { x, y } = getScales(data, mode, yCoord);
             // Print the graph. 
             const areas = printAreas(mode, keys, colors, x, y, yCoord, chart);
-            const { xAxis, yAxis } = printAxes(mode, x, y, svg);
-            printLegend(keys, colors, svg, divName);
+            const { xAxis, yAxis } = printAxes(mode, x, y);
+            printLegend(keys, colors, divName);
             // Add user interaction.
-            addBrushing(data, mode, x, areas, svg, chart, xAxis);
-            addSlider(data, mode, keys, colors, x, y, svg, chart);
+            addBrushing(data, mode, x, areas, chart, xAxis);
+            addSlider(data, mode, keys, colors, x, y, chart);
         })
     }
 

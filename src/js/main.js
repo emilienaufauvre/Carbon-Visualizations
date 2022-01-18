@@ -1,15 +1,16 @@
+// Settings.
 Themes.setBackground();
 
+// Visualization.
 BubbleMap.printBubbleMap("#bubble_map");
 
-function changeMode() {
-    // Get the checkbox
-    var checkBox = document.getElementById("switch");
-  
-    // Change mode for the stacked graph.
-    if (checkBox.checked == true){
-      BubbleMap.changeMode(true);
-    } else {
-      BubbleMap.changeMode(false);
-    }
-  }
+// Switch button
+function leftClick() {
+    document.getElementById("btn").style.left = "0";
+    BubbleMap.printStackedGraph(StackedGraph.Modes.DATE);
+}
+
+function rightClick() {
+    document.getElementById("btn").style.left = "150px";
+    BubbleMap.printStackedGraph(StackedGraph.Modes.DURATION);
+}
