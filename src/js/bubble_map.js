@@ -180,6 +180,7 @@ let BubbleMap = (() => {
         self.Svg.selectAll("myCircles")
             .data(data.sort((a,b) => +b.n - +a.n))
             .join("circle")
+                .attr("id", d => d.name)
                 .attr("cx", d => projection([d.long, d.lat])[0])
                 .attr("cy", d => projection([d.long, d.lat])[1])
                 .attr("r", d => size(+d.n))

@@ -1,0 +1,40 @@
+#root, 
+#container, 
+#stacked_graph {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: "Lucida Console", "Courier New", monospace;
+    transition: 5s;
+}
+
+.button-box {
+    width: 300px;
+    margin: 35px auto;
+    position: relative;
+    border-radius: 30px;
+    background: #BBB6;
+}
+
+.toggle-btn {
+    padding: 10px 40px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+    text-align: center;
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+#btn {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    background: #e67e22;
+    border-radius: 30px;
+    transition: .5s;
+}
