@@ -1,12 +1,10 @@
-# Carbon Visualizations
-
 [![Generic badge](https://img.shields.io/badge/license-Unlicense-green.svg)](https://shields.io/)
 
 <div align="center">
 	<br>
 	<br>
 	<img src="res/icon.png" width="200" height="200">
-	<h1>Carbon Visualization</h1>
+	<h1>Carbon Visualizations</h1>
 	<p>
     <b>Visualizations of the co2 emitted during work travels by researchers.</b>
 	</p>
@@ -24,6 +22,26 @@ Some visualizations of [work travels by members of a research lab](https://grica
 	<br>
 </p>
 
+## Instructions
+
+Go to the root of the project.
+
+```bash
+cd Carbon-Visualizations
+```
+
+Run a http server using python for example.
+
+```bash
+python -m http.server
+```
+
+Go to the address where your server is serving ([local host on port 8000](http://0.0.0.0:8000/) by default for python) and open `src/main.html`.
+
 ## Features
 
 - The colors can be changed with the module `Themes` by changing the value of `Themes.theme`.
+
+# Attributions
+
+* Icon made by [Dimi Kazak](https://www.flaticon.com/authors/dimi-kazak) from [Flaticon](https://www.flaticon.com/).
