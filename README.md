@@ -38,10 +38,19 @@ python -m http.server
 
 Go to the address where your server is serving ([local host on port 8000](http://0.0.0.0:8000/) by default for python) and open `src/main.html`.
 
+## Information
+
+The dependencies of the source code are localized in the `vendor/` file.
+
+* [D3.js library](https://d3js.org/).
+* [d3-simple-slider library](https://github.com/johnwalley/d3-simple-slider).
+
 ## Features
 
-- The colors can be changed with the module `Themes` by changing the value of `Themes.theme`.
+* The colors can be changed with the module `Themes` by changing the value of `Themes.theme`.
 
 ## Attributions
 
+* Visualizations made using the [D3.js library](https://d3js.org/).
+* Sliders made using the [d3-simple-slider library](https://github.com/johnwalley/d3-simple-slider).
 * Icon made by [Dimi Kazak](https://www.flaticon.com/authors/dimi-kazak) from [Flaticon](https://www.flaticon.com/).
