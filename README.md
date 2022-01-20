@@ -36,7 +36,7 @@ Run a http server using python for example.
 python -m http.server
 ```
 
-Go to the address where your server is serving ([local host on port 8000](http://0.0.0.0:8000/) by default for python) and open `src/main.html`.
+Go to the address where your server is serving ([local host on port 8000](http://0.0.0.0:8000/) by default using this command) and open `src/main.html`.
 
 ## Information
 
